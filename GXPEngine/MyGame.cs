@@ -78,9 +78,4 @@ public class MyGame : Game
     {
         new MyGame().Start();                   // Create a "MyGame" and start it
     }
-
-    void Test()
-    {
-        //Dit is een test.
-    }
 }
