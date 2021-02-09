@@ -1,11 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;									// System contains a lot of default C# libraries 
+using GXPEngine;								// GXPEngine contains the engine
 
 namespace GXPEngine
 {
-    class CreditsMenu
+    class CreditsMenu : GameObject
     {
+        Sprite creditsmenu;
+
+        public CreditsMenu() : base()
+        {
+            creditsmenu = new Sprite("CreditsMenu.png");
+            AddChild(creditsmenu);
+        }
     }
 }

@@ -3,7 +3,7 @@ using GXPEngine;                                // GXPEngine contains the engine
 public class MyGame : Game
 {
     private StartMenu _menu;
-    private StartMenu _creditsmenu;
+    private CreditsMenu _creditsmenu;
 
     Sound _quitSound;
 
@@ -12,7 +12,7 @@ public class MyGame : Game
 
     public static float timeSince;
 
-    public MyGame() : base(1440, 1080, false, false)    // Create a window that's 1280x720 and NOT fullscreen
+    public MyGame() : base(1440, 1080, false, false)    // Create a window that's 1440x1080 and NOT fullscreen and V-Sync turned OFF
     {
         targetFps = 60;
 
@@ -38,8 +38,8 @@ public class MyGame : Game
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void CreateCreditsMenu()
     {
-        //_creditsmenu = new CreditsMenu();
-        //AddChild(_creditsmenu);
+        _creditsmenu = new CreditsMenu();
+        AddChild(_creditsmenu);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
