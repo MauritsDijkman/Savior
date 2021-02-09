@@ -7,7 +7,7 @@ namespace GXPEngine
     {
         public Button_Credits() : base("credits_button_empty.png")
         {
-            SetXY(470, 729);
+            SetXY(470, 729); //dit is een wijziging
         }
     }
 }
