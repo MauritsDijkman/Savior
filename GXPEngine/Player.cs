@@ -8,21 +8,26 @@ namespace GXPEngine
         int animationDrawsBetweenFrames;
         int step;
 
-        int speed;
-
+        int speedX;
+        int speedY;
+        
         bool wIsPressed;
-        bool sIsPressed;
         bool dIsPressed;
         bool aIsPressed;
 
+        bool jump;
+
         Healthbar _healthbar;
 
-        public Player() : base("player_tile.png", 6, 1)
+        Sprite _jump;
+
+        public Player() : base("player_tile.png", 4, 1)
         {
             Spawn();
 
             animationDrawsBetweenFrames = 5;
-            speed = 5;
+            speedX = 5;
+            speedY = 0;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,17 +58,7 @@ namespace GXPEngine
                 wIsPressed = false;
                 SetFrame(0);
             }
-
-            if (Input.GetKeyDown(Key.S))
-            {
-                sIsPressed = true;
-            }
-            if (Input.GetKeyUp(Key.S))
-            {
-                sIsPressed = false;
-                SetFrame(0);
-            }
-
+            
             if (Input.GetKeyDown(Key.D))
             {
                 dIsPressed = true;
@@ -86,7 +81,7 @@ namespace GXPEngine
                 SetFrame(0);
             }
 
-            if (wIsPressed == true || sIsPressed == true || dIsPressed == true || aIsPressed == true)
+            if (wIsPressed == true || dIsPressed == true || aIsPressed == true)
             {
                 step = step + 1;
 
@@ -99,35 +94,59 @@ namespace GXPEngine
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleMovement()
+        //                                                                                                                        HandleHorizontalMovement()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HandleMovement()
+        void HandleHorizontalMovement()
         {
-            if (Input.GetKey(Key.W))
-            {
-                Move(0, -speed);
-            }
-
-            if (Input.GetKey(Key.S))
-            {
-                Move(0, speed);
-            }
-
+            
+                        
             if (Input.GetKey(Key.D))
             {
-                Move(speed, 0);
+                Move(speedX, 0);
             }
 
             if (Input.GetKey(Key.A))
             {
-                Move(-speed, 0);
+                Move(-speedX, 0);
             }
+
+
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleBorders()
+        //                                                                                                                        HandleVerticalMovement()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HandleBorders()
+
+        void HandleVerticalMovement()
+        {
+            speedY = speedY + 2;
+            y = y + speedY;
+
+            if (Input.GetKeyDown(Key.W) && jump == false)
+            {
+                speedY = -32;
+                jump = true;
+
+
+                if (jump == true)
+                {
+                    _jump = new Sprite("player_jump.png");
+                    AddChild(_jump);
+                }
+
+                if (jump == false)
+                {
+                    _jump.Destroy();
+                }
+
+
+            }
+        }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        HandleBorders()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    void HandleBorders()
         {
             x = Mathf.Clamp(x, (0 + (width / 6) + 12), (1440 - (width / 6)));
             y = Mathf.Clamp(y, (0 + (height / 2) - 18), (1080 - (height / 2)));
@@ -142,6 +161,11 @@ namespace GXPEngine
             {
                 Globals.health = Globals.health - 1;
             }
+
+            if (y > 1000)
+            {
+                jump = false;
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -150,7 +174,8 @@ namespace GXPEngine
         void Update()
         {
             HandleAnimation();
-            HandleMovement();
+            HandleHorizontalMovement();
+            HandleVerticalMovement();
             HandleBorders();
         }
     }
