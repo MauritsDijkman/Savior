@@ -19,9 +19,7 @@ public class MyGame : Game
     public bool level1IsActive;
 
     bool quitsoundHasPlayed;
-
     bool gameIsPaused;
-
 
     public MyGame() : base(1440, 1080, false, false)    // Create a window that's 1440x1080 and NOT fullscreen and V-Sync turned OFF
     {

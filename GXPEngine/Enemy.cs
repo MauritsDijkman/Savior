@@ -53,13 +53,13 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleMovement()
         {
-            if (x >= 1400)
+            if (x >= (1440 - (width / 6)))
             {
                 goToRight = false;
                 goToLeft = true;
             }
 
-            if (x <= 40)
+            if (x <= (0 + (width / 6) + 12))
             {
                 goToLeft = false;
                 goToRight = true;
@@ -68,11 +68,13 @@ namespace GXPEngine
             if (goToLeft == true)
             {
                 x = x - speed;
+                Mirror(true, false);
             }
 
             if (goToRight == true)
             {
                 x = x + speed;
+                Mirror(false, false);
             }
         }
 
@@ -86,4 +88,3 @@ namespace GXPEngine
         }
     }
 }
-

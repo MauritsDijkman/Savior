@@ -67,6 +67,7 @@ namespace GXPEngine
             if (Input.GetKeyDown(Key.D))
             {
                 dIsPressed = true;
+                Mirror(false, false);
             }
             if (Input.GetKeyUp(Key.D))
             {
@@ -77,6 +78,7 @@ namespace GXPEngine
             if (Input.GetKeyDown(Key.A))
             {
                 aIsPressed = true;
+                Mirror(true, false);
             }
             if (Input.GetKeyUp(Key.A))
             {
