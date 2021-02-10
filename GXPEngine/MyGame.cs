@@ -4,6 +4,7 @@ public class MyGame : Game
 {
     private StartMenu _menu;
     private CreditsMenu _creditsmenu;
+    private Level1 _level1;
 
     Sound _quitSound;
 
@@ -40,6 +41,12 @@ public class MyGame : Game
     {
         _creditsmenu = new CreditsMenu();
         AddChild(_creditsmenu);
+    }
+
+    public void CreateGame()
+    {
+        _level1 = new Level1();
+        AddChild(_level1);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
