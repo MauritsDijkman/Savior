@@ -7,6 +7,7 @@ namespace GXPEngine
     {
         Sprite background_level1;
         Player player;
+        Enemy enemy1;
 
         public Level1() : base()
         {
@@ -21,8 +22,12 @@ namespace GXPEngine
             background_level1 = new Sprite("background_level1.png");
             AddChild(background_level1);
 
+            enemy1 = new Enemy();
+            AddChild(enemy1);
+
             player = new Player();
             AddChild(player);
+
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

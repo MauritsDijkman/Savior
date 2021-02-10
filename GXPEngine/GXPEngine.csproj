@@ -41,6 +41,7 @@
     <Compile Include="Button_Quit.cs" />
     <Compile Include="Button_Start.cs" />
     <Compile Include="CreditsMenu.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Healthbar.cs" />
