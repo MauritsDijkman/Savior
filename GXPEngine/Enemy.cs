@@ -28,8 +28,8 @@ namespace GXPEngine
         {
             SetFrame(1);
 
-            SetXY(game.width / 2 + 300, game.height / 2);
-            SetOrigin(width / 2, height / 2 + 100);
+            SetXY(game.width / 2 + 500, game.height / 2 + 150);
+            SetOrigin(width / 2, height / 2);
 
             goToRight = true;
         }
