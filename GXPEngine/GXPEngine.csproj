@@ -43,6 +43,7 @@
     <Compile Include="CreditsMenu.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
+    <Compile Include="Healthbar.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="StartMenu.cs" />
