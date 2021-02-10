@@ -36,12 +36,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Block_Jump.cs" />
     <Compile Include="Button_Back.cs" />
     <Compile Include="Button_Credits.cs" />
     <Compile Include="Button_Quit.cs" />
+    <Compile Include="Button_Restart.cs" />
     <Compile Include="Button_Start.cs" />
     <Compile Include="CreditsMenu.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="GameOver.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Healthbar.cs" />

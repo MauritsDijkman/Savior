@@ -6,6 +6,10 @@ namespace GXPEngine
     public class Level1 : GameObject
     {
         Sprite background_level1;
+        Sprite ground_level1;
+
+        Block_Jump block_jump;
+
         Player player;
         Enemy enemy1;
 
@@ -22,12 +26,17 @@ namespace GXPEngine
             background_level1 = new Sprite("background_level1.png");
             AddChild(background_level1);
 
+            ground_level1 = new Sprite("ground_level1.png");
+            AddChild(ground_level1);
+
+            block_jump = new Block_Jump();
+            AddChild(block_jump);
+
             enemy1 = new Enemy();
             AddChild(enemy1);
 
             player = new Player();
             AddChild(player);
-
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

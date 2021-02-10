@@ -28,7 +28,7 @@ namespace GXPEngine
         {
             SetFrame(1);
 
-            SetXY(game.width / 2, game.height / 2);
+            SetXY(game.width / 2 + 300, game.height / 2);
             SetOrigin(width / 2, height / 2 + 100);
 
             goToRight = true;
