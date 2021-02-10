@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Button_Back.cs" />
     <Compile Include="Button_Credits.cs" />
     <Compile Include="Button_Quit.cs" />
     <Compile Include="Button_Start.cs" />
