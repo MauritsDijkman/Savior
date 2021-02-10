@@ -10,7 +10,10 @@ namespace GXPEngine
 
         int speed;
 
-        bool playerIsMoving;
+        bool wIsPressed;
+        bool sIsPressed;
+        bool dIsPressed;
+        bool aIsPressed;
 
         public Player() : base("player_tile.png", 6, 1)
         {
@@ -36,17 +39,43 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAnimation()
         {
-            if (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.S) || Input.GetKeyDown(Key.D) || Input.GetKeyDown(Key.A))
+            if (Input.GetKeyDown(Key.W))
             {
-                playerIsMoving = true;
+                wIsPressed = true;
+            }
+            if (Input.GetKeyUp(Key.W))
+            {
+                wIsPressed = false;
             }
 
-            if (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.S) || Input.GetKeyUp(Key.D) || Input.GetKeyUp(Key.A))
+            if (Input.GetKeyDown(Key.S))
             {
-                playerIsMoving = false;
+                sIsPressed = true;
+            }
+            if (Input.GetKeyUp(Key.S))
+            {
+                sIsPressed = false;
             }
 
-            if (playerIsMoving == true)
+            if (Input.GetKeyDown(Key.D))
+            {
+                dIsPressed = true;
+            }
+            if (Input.GetKeyUp(Key.D))
+            {
+                dIsPressed = false;
+            }
+
+            if (Input.GetKeyDown(Key.A))
+            {
+                aIsPressed = true;
+            }
+            if (Input.GetKeyUp(Key.A))
+            {
+                aIsPressed = false;
+            }
+
+            if (wIsPressed == true || sIsPressed == true || dIsPressed == true || aIsPressed == true)
             {
                 step = step + 1;
 
@@ -104,3 +133,4 @@ namespace GXPEngine
         }
     }
 }
+
