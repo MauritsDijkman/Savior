@@ -22,6 +22,12 @@ public class MyGame : Game
     bool quitsoundHasPlayed;
     bool gameIsPaused;
 
+    Sprite pause_menu;
+    Sprite unpause_button_normal;
+    Sprite unpause_button_hover;
+    Sprite back_main_button_normal;
+    Sprite back_main_button_hover;
+
     public MyGame() : base(1440, 1080, false, false)    // Create a window that's 1440x1080 and NOT fullscreen and V-Sync turned OFF
     {
         targetFps = 60;
@@ -42,8 +48,34 @@ public class MyGame : Game
     public void CreateMenu()
     {
         _menu = new StartMenu();
-        AddChild(_menu);
+        AddChild(_menu);       
     }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        CreatePauseMenu()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void CreatePauseMenu()
+    {
+        pause_menu = new Sprite("PauseMenu.png");
+        LateAddChild(pause_menu);
+        pause_menu.visible = false;
+
+        unpause_button_normal = new Sprite("unpause_button_normal.png");
+        LateAddChild(unpause_button_normal);
+        unpause_button_normal.visible = false;
+
+        unpause_button_hover = new Sprite("unpause_button_hover.png");
+        LateAddChild(unpause_button_hover);
+        unpause_button_hover.visible = false;
+
+        back_main_button_normal = new Sprite("back_main_button_normal.png");
+        LateAddChild(back_main_button_normal);
+        back_main_button_normal.visible = false;
+
+        back_main_button_hover = new Sprite("back_main_button_hover.png");
+        LateAddChild(back_main_button_hover);
+        back_main_button_hover.visible = false;
+    }    
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                                                                        CreateCreditsMenu()
@@ -51,7 +83,7 @@ public class MyGame : Game
     public void CreateCreditsMenu()
     {
         _creditsmenu = new CreditsMenu();
-        AddChild(_creditsmenu);
+        AddChild(_creditsmenu);        
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,6 +93,9 @@ public class MyGame : Game
     {
         _level1 = new Level1();
         AddChild(_level1);
+        level1IsActive = true;
+
+        CreatePauseMenu();
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -107,7 +142,10 @@ public class MyGame : Game
             {
                 _level1.Pause();
                 gameIsPaused = true;
-            }
+                pause_menu.visible = true;
+                unpause_button_normal.visible = true;
+                back_main_button_normal.visible = true;
+            }                        
         }
     }
 
@@ -122,6 +160,46 @@ public class MyGame : Game
             {
                 _level1.Unpause();
                 gameIsPaused = false;
+                pause_menu.visible = false;
+                unpause_button_normal.visible = false;
+                back_main_button_normal.visible = false;
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        HandlePauseButton()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    private void HandlePauseButton()
+    {
+        if (gameIsPaused == true)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (unpause_button_normal.HitTestPoint(Input.mouseX, Input.mouseY))
+                {
+                    //stopMusic();
+                    if (level1IsActive)
+                    {
+                        gameIsPaused = false;
+                        //game.GetChildren().ForEach(ResetGame);
+                    }
+                                        
+                    //CreateMenu();
+                    //return;
+                }
+            }
+
+            if (unpause_button_normal.HitTestPoint(Input.mouseX, Input.mouseY) && gameIsPaused == true)
+            {
+                unpause_button_hover.visible = true;
+                unpause_button_normal.visible = false;
+            }
+            else
+            {
+                unpause_button_hover.visible = false;
+                unpause_button_normal.visible = true;
             }
         }
     }
@@ -132,9 +210,9 @@ public class MyGame : Game
     private void Update()
     {
         HandleQuitButton();
-
+        HandlePauseButton();
         HandlePause();
-        HandleUnpause();
+        HandleUnpause();        
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
