@@ -3,31 +3,177 @@ using GXPEngine;								// GXPEngine contains the engine
 
 namespace GXPEngine
 {
+    public enum PlayerState
+    {
+        None,
+        Walk,
+        Jump,
+        Attack
+    }
+
     public class Player : AnimationSprite
     {
-        int animationDrawsBetweenFrames;
-        int step;
+        PlayerState currentState = PlayerState.None;
 
-        int speedX;
-        int speedY;
+        int animationDrawsBetweenFramesWalk;
+        int stepWalk;
 
-        bool wIsPressed;
+        int animationDrawsBetweenFramesAttack;
+        int stepAttack;
+
+        float speedX;
+        float speedY;
+
         bool dIsPressed;
         bool aIsPressed;
 
-        bool jump;
+        bool playerIsJumping;
+        bool playerIsAttacking;
+
+        bool ResetFrame;
+
+        bool isLanded;
+
+        int countFramesWalk;
+        int countFramesAttack;
 
         Healthbar _healthbar;
 
-        Sprite _jump;
-
-        public Player() : base("player_tile.png", 4, 1)
+        public Player() : base("player_tile.png", 8, 1)
         {
             Spawn();
 
-            animationDrawsBetweenFrames = 5;
+            animationDrawsBetweenFramesWalk = 5;
+            animationDrawsBetweenFramesAttack = 5;
+
             speedX = 5;
             speedY = 0;
+
+            SetState(PlayerState.Walk);
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        SetState()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void SetState(PlayerState newState)
+        {
+            if (currentState != newState)
+            {
+                HandleStateTransition(currentState, newState);
+                currentState = newState;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleStateTransition()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleStateTransition(PlayerState oldState, PlayerState newState)
+        {
+            if (newState == PlayerState.Jump)
+            {
+                speedY = -32;
+                isLanded = false;
+                SetFrame(7);
+            }
+
+            if (newState == PlayerState.Walk)
+            {
+                SetFrame(0);
+            }
+
+            if (newState == PlayerState.Attack)
+            {
+                SetFrame(4);
+                countFramesAttack = 4;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleState()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleState()
+        {
+            if (currentState == PlayerState.Walk)
+            {
+                HandleWalkState();
+            }
+            if (currentState == PlayerState.Jump)
+            {
+                HandleJumpState();
+            }
+            if (currentState == PlayerState.Attack)
+            {
+                HandleAttackState();
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleWalkState()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        private void HandleWalkState()
+        {
+            HandleHorizontalControls();
+
+            if (Input.GetKey(Key.D) || Input.GetKey(Key.A))
+            {
+                stepWalk = stepWalk + 1;
+
+                if (stepWalk > animationDrawsBetweenFramesWalk)
+                {
+                    NextFrame();
+                    stepWalk = 0;
+                    countFramesWalk = countFramesWalk + 1;
+                }
+
+                if (countFramesWalk >= 4)
+                {
+                    SetFrame(0);
+                    countFramesWalk = 0;
+                }
+            }
+
+            if (Input.GetKey(Key.W))
+            {
+                SetState(PlayerState.Jump);
+            }
+
+            if (Input.GetKey(Key.SPACE))
+            {
+                SetState(PlayerState.Attack);
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleJumpState()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        private void HandleJumpState()
+        {
+            HandleHorizontalControls();
+
+            if (isLanded)
+            {
+                SetState(PlayerState.Walk);
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleAttackState()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        private void HandleAttackState()
+        {
+            stepAttack = stepAttack + 1;
+
+            if (stepAttack > animationDrawsBetweenFramesAttack)
+            {
+                NextFrame();
+                stepAttack = 0;
+                countFramesAttack = countFramesAttack + 1;
+            }
+
+            if (countFramesAttack >= 7)
+            {
+                SetState(PlayerState.Walk);
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -38,58 +184,34 @@ namespace GXPEngine
             SetFrame(0);
 
             SetXY(game.width / 2, game.height / 2);
-            SetOrigin(width / 2, height / 2);
+            SetOrigin(width / 2, 0);
 
             _healthbar = new Healthbar();
             AddChild(_healthbar);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleAnimation()
+        //                                                                                                                        HandleHorizontalControls()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HandleAnimation()
+        void HandleHorizontalControls()
         {
-            if (Input.GetKeyDown(Key.W))
+            if (Input.GetKey(Key.A))
             {
-                wIsPressed = true;
+                speedX -= 1f;
             }
-            if (Input.GetKeyUp(Key.W))
+            if (Input.GetKey(Key.D))
             {
-                wIsPressed = false;
-                SetFrame(0);
+                speedX += 1f;
             }
 
             if (Input.GetKeyDown(Key.D))
             {
-                dIsPressed = true;
                 Mirror(false, false);
-            }
-            if (Input.GetKeyUp(Key.D))
-            {
-                dIsPressed = false;
-                SetFrame(0);
             }
 
             if (Input.GetKeyDown(Key.A))
             {
-                aIsPressed = true;
                 Mirror(true, false);
-            }
-            if (Input.GetKeyUp(Key.A))
-            {
-                aIsPressed = false;
-                SetFrame(0);
-            }
-
-            if (wIsPressed == true || dIsPressed == true || aIsPressed == true)
-            {
-                step = step + 1;
-
-                if (step > animationDrawsBetweenFrames)
-                {
-                    NextFrame();
-                    step = 0;
-                }
             }
         }
 
@@ -98,15 +220,8 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleHorizontalMovement()
         {
-            if (Input.GetKey(Key.D))
-            {
-                Move(speedX, 0);
-            }
-
-            if (Input.GetKey(Key.A))
-            {
-                Move(-speedX, 0);
-            }
+            MoveWithCollision(speedX, 0f);
+            speedX *= 0.6f;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,24 +229,11 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleVerticalMovement()
         {
-            speedY = speedY + 2;
-            y = y + speedY;
-
-            if (Input.GetKeyDown(Key.W) && jump == false)
+            speedY = speedY + 2f;
+            if (MoveWithCollision(0f, speedY) == false)
             {
-                speedY = -32;
-                jump = true;
-
-                if (jump == true)
-                {
-                    _jump = new Sprite("player_jump.png");
-                    AddChild(_jump);
-                }
-
-                if (jump == false)
-                {
-                    _jump.Destroy();
-                }
+                speedY = 0f;
+                isLanded = true;
             }
         }
 
@@ -140,8 +242,13 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleBorders()
         {
-            x = Mathf.Clamp(x, (0 + (width / 4 + 25)), (1440 - (width / 4 + 25)));
-            y = Mathf.Clamp(y, (0 + (height / 2)), (1080 - (height / 2)));
+            x = Mathf.Clamp(x, (0 + (width / 4 + 28)), (1440 - (width / 4 + 28)));
+            y = Mathf.Clamp(y, (0), (1080 - height));
+
+            if (y >= (1080 - height))
+            {
+                isLanded = true;
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -153,11 +260,34 @@ namespace GXPEngine
             {
                 Globals.health = Globals.health - 1;
             }
+        }
 
-            //if (y > 1000)
-            // {
-            ///    jump = false;
-            //}
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        MoveWithCollision()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        bool MoveWithCollision(float moveX, float moveY)
+        {
+            float previousX = x;
+            float previousY = y;
+
+            x += moveX;
+            y += moveY;
+
+            bool hasCollided = false;
+
+            foreach (GameObject other in GetCollisions())
+            {
+                if (other is Block_Jump)
+                {
+                    hasCollided = true;
+                }
+            }
+            if (hasCollided == true)
+            {
+                x = previousX;
+                y = previousY;
+            }
+            return (hasCollided == false);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -165,9 +295,11 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            HandleAnimation();
+            HandleState();
+
             HandleHorizontalMovement();
             HandleVerticalMovement();
+
             HandleBorders();
         }
     }

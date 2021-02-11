@@ -3,11 +3,11 @@ using GXPEngine;								// GXPEngine contains the engine
 
 namespace GXPEngine
 {
-    public class Block_Jump : Sprite
+    public class Ground_Level1 : Sprite
     {
-        public Block_Jump() : base("block_jump.png")
+        public Ground_Level1() : base("ground_level1.png")
         {
-            SetXY(610, 900);
+            SetXY(0, 688);
         }
     }
 }
