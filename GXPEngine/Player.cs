@@ -30,6 +30,7 @@ namespace GXPEngine
         int countFramesAttack;
 
         Healthbar _healthbar;
+        Hitbox_Player _hitbox_player;
 
         public Player() : base("player_tile.png", 8, 1)
         {
@@ -180,6 +181,10 @@ namespace GXPEngine
 
             _healthbar = new Healthbar();
             AddChild(_healthbar);
+
+            _hitbox_player = new Hitbox_Player();
+            AddChild(_hitbox_player);
+
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -189,21 +194,33 @@ namespace GXPEngine
         {
             if (Input.GetKey(Key.A))
             {
-                speedX -= 2f;
+                speedX -= 1f;
             }
             if (Input.GetKey(Key.D))
             {
-                speedX += 2f;
+                speedX += 1f;
             }
 
             if (Input.GetKeyDown(Key.D))
             {
                 Mirror(false, false);
+                Globals.dIsPressed = true;
             }
 
             if (Input.GetKeyDown(Key.A))
             {
                 Mirror(true, false);
+                Globals.aIsPressed = true;
+            }
+
+            if (Input.GetKeyUp(Key.D))
+            {
+                Globals.dIsPressed = false;
+            }
+
+            if (Input.GetKeyUp(Key.A))
+            {
+                Globals.aIsPressed = false;
             }
         }
 
@@ -234,7 +251,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleBorders()
         {
-            x = Mathf.Clamp(x, (0 + (width / 4 + 28)), (1440 - (width / 4 + 28)));
+            x = Mathf.Clamp(x, (0 + (width / 4 + 100)), (1440 - (width / 4 + 100)));
             y = Mathf.Clamp(y, (0), (1080 - height - 260));
 
             if (y >= (1080 - height - 260))
@@ -293,6 +310,8 @@ namespace GXPEngine
             HandleVerticalMovement();
 
             HandleBorders();
+
+            Globals.playerX = x;
         }
     }
 }

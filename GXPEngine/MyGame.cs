@@ -3,6 +3,9 @@ using GXPEngine;                                // GXPEngine contains the engine
 static class Globals
 {
     public static int health;
+    public static float playerX;
+    public static bool aIsPressed;
+    public static bool dIsPressed;
 }
 
 public class MyGame : Game
