@@ -50,11 +50,15 @@ namespace GXPEngine
                 if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
                     GoBackToStartMenu();
+                    Globals.aIsPressed = false;
+                    Globals.dIsPressed = false;
                 }
 
                 if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
                     RestartLevel();
+                    Globals.aIsPressed = false;
+                    Globals.dIsPressed = false;
                 }
             }
         }

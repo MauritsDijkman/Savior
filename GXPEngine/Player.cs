@@ -27,7 +27,6 @@ namespace GXPEngine
         bool isLanded;
 
         int countFramesWalk;
-        int countFramesAttack;
 
         Healthbar _healthbar;
         Hitbox_Player _hitbox_player;
@@ -77,7 +76,7 @@ namespace GXPEngine
             if (newState == PlayerState.Attack)
             {
                 SetFrame(4);
-                countFramesAttack = 4;
+                Globals.countFramesAttack = 4;
             }
         }
 
@@ -160,10 +159,10 @@ namespace GXPEngine
             {
                 NextFrame();
                 stepAttack = 0;
-                countFramesAttack = countFramesAttack + 1;
+                Globals.countFramesAttack = Globals.countFramesAttack + 1;
             }
 
-            if (countFramesAttack >= 7)
+            if (Globals.countFramesAttack >= 7)
             {
                 SetState(PlayerState.Walk);
             }
@@ -265,10 +264,10 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void OnCollision(GameObject other)
         {
-            if (other is Enemy)
-            {
-                Globals.health = Globals.health - 1;
-            }
+            //if (other is Enemy)
+            //{
+            //    Globals.health = Globals.health - 1;
+            //}
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

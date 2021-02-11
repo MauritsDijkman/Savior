@@ -6,6 +6,7 @@ static class Globals
     public static float playerX;
     public static bool aIsPressed;
     public static bool dIsPressed;
+    public static float countFramesAttack;
 }
 
 public class MyGame : Game
