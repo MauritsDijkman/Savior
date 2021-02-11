@@ -6,7 +6,7 @@ namespace GXPEngine
     public class Level1 : GameObject
     {
         Level1_Background background;
-        Block_Jump block_jump;
+        //Block_Jump block_jump;
         Player player;
         Enemy enemy1;
 
@@ -23,7 +23,7 @@ namespace GXPEngine
             background = new Level1_Background();
             AddChild(background);
 
-            block_jump = new Block_Jump();
+            //block_jump = new Block_Jump();
             //AddChild(block_jump);
 
             enemy1 = new Enemy();

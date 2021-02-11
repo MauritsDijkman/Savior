@@ -7,7 +7,7 @@ namespace GXPEngine
     {
         public Block_Jump() : base("block_jump.png")
         {
-            SetXY(610, 900);
+            SetXY(300, 700);
         }
     }
 }
