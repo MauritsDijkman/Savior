@@ -3,6 +3,7 @@ using GXPEngine;                                // GXPEngine contains the engine
 static class Globals
 {
     public static int health;
+    public static float playerX;
 }
 
 public class MyGame : Game

@@ -293,6 +293,8 @@ namespace GXPEngine
             HandleVerticalMovement();
 
             HandleBorders();
+
+            Globals.playerX = x;
         }
     }
 }
