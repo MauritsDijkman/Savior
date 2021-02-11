@@ -5,7 +5,6 @@ namespace GXPEngine
 {
     class Healthbar : AnimationSprite
     {
-
         public Healthbar() : base("healthbar_tile.png", 5, 1)
         {
             Spawn();
