@@ -24,14 +24,6 @@ namespace GXPEngine
         float speedX;
         float speedY;
 
-        bool dIsPressed;
-        bool aIsPressed;
-
-        bool playerIsJumping;
-        bool playerIsAttacking;
-
-        bool ResetFrame;
-
         bool isLanded;
 
         int countFramesWalk;

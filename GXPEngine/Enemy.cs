@@ -13,11 +13,11 @@ namespace GXPEngine
         bool goToLeft;
         bool goToRight;
 
-        public Enemy() : base("enemy_tile.png", 6, 1)
+        public Enemy() : base("enemy_tile.png", 4, 1)
         {
             Spawn();
 
-            animationDrawsBetweenFrames = 5;
+            animationDrawsBetweenFrames = 10;
             speed = 3;
         }
 
@@ -28,7 +28,7 @@ namespace GXPEngine
         {
             SetFrame(1);
 
-            SetXY(game.width / 2 + 500, game.height / 2 + 150);
+            SetXY(game.width / 2 + 500, game.height / 2 + 205);
             SetOrigin(width / 2, height / 2);
 
             goToRight = true;
@@ -68,13 +68,13 @@ namespace GXPEngine
             if (goToLeft == true)
             {
                 x = x - speed;
-                Mirror(true, false);
+                Mirror(false, false);
             }
 
             if (goToRight == true)
             {
                 x = x + speed;
-                Mirror(false, false);
+                Mirror(true, false);
             }
         }
 
