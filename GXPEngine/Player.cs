@@ -189,11 +189,11 @@ namespace GXPEngine
         {
             if (Input.GetKey(Key.A))
             {
-                speedX -= 1f;
+                speedX -= 2f;
             }
             if (Input.GetKey(Key.D))
             {
-                speedX += 1f;
+                speedX += 2f;
             }
 
             if (Input.GetKeyDown(Key.D))
@@ -235,9 +235,9 @@ namespace GXPEngine
         void HandleBorders()
         {
             x = Mathf.Clamp(x, (0 + (width / 4 + 28)), (1440 - (width / 4 + 28)));
-            y = Mathf.Clamp(y, (0), (1080 - height));
+            y = Mathf.Clamp(y, (0), (1080 - height - 260));
 
-            if (y >= (1080 - height))
+            if (y >= (1080 - height - 260))
             {
                 isLanded = true;
             }
