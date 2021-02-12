@@ -31,8 +31,12 @@ namespace GXPEngine
         Healthbar _healthbar;
         Hitbox_Player _hitbox_player;
 
+        Sound _attackSound;
+
         public Player() : base("player_tile.png", 8, 1)
         {
+            _attackSound = new Sound("Attack_sound_player.wav", false, false);
+
             Spawn();
 
             animationDrawsBetweenFramesWalk = 5;
@@ -131,7 +135,10 @@ namespace GXPEngine
 
             if (Input.GetKey(Key.SPACE))
             {
+                _attackSound.Play();
                 SetState(PlayerState.Attack);
+                Globals.aIsPressed = false;
+                Globals.dIsPressed = false;
             }
         }
 
@@ -264,10 +271,12 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void OnCollision(GameObject other)
         {
-            //if (other is Enemy)
-            //{
-            //    Globals.health = Globals.health - 1;
-            //}
+            if (other is Hitbox_Enemy)
+            {
+                Globals.health = Globals.health - 1;
+                MyGame mygame = game as MyGame;
+                mygame.stopMusic();
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

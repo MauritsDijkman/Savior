@@ -28,6 +28,8 @@ namespace GXPEngine
             {
                 LateDestroy();
                 LateRemove();
+
+                Globals.EnemyIsDead = true;
             }
         }
 
