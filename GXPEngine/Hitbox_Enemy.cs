@@ -24,7 +24,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void OnCollision(GameObject other)
         {
-            if (other is Hitbox_Player && Globals.countFramesAttack >= 7)
+            if (other is Hitbox_Player && Globals.playerIsAttacking == true)
             {
                 LateDestroy();
                 LateRemove();

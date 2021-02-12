@@ -17,3 +17,8 @@ D:\Documents\CMGT - Year 1\3rd Period\Project\GXPEngine\GXPEngine\obj\x86\Debug\
 D:\Documents\CMGT - Year 1\3rd Period\Project\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 D:\Documents\CMGT - Year 1\3rd Period\Project\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.exe
 D:\Documents\CMGT - Year 1\3rd Period\Project\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\bin\Debug\GXPEngine.exe
+C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\bin\Debug\GXPEngine.pdb
+C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.pdb

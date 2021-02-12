@@ -8,6 +8,7 @@ static class Globals
     public static bool aIsPressed;
     public static bool dIsPressed;
     public static bool EnemyIsDead;
+    public static bool playerIsAttacking;
 }
 
 public class MyGame : Game
