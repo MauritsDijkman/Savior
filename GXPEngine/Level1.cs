@@ -9,7 +9,6 @@ namespace GXPEngine
         Level1_Background background;
         Enemy enemy1;
 
-        //Block_Jump block_jump;
         public Level1() : base()
         {
             StartLevel();
@@ -20,8 +19,6 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void StartLevel()
         {
-            //AddChild(new Sprite("background_level1.png"));
-
             background = new Level1_Background();
             AddChild(background);
 
@@ -30,9 +27,6 @@ namespace GXPEngine
 
             enemy1 = new Enemy();
             AddChild(enemy1);
-
-            //block_jump = new Block_Jump();
-            //AddChild(block_jump);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -42,9 +36,6 @@ namespace GXPEngine
         {
             if (player.x + x > 800) x = 800 - player.x;
             if (player.x + x < 500) x = 500 - player.x;
-
-            //if (player.x + x > 1220) x = 1220 - player.x;
-            //if (player.x + x < 200) x = 200 - player.x;
         }
     }
 }

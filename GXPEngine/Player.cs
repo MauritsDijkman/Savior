@@ -28,14 +28,15 @@ namespace GXPEngine
 
         int countFramesWalk;
 
-        Healthbar _healthbar;
         Hitbox_Player _hitbox_player;
 
         Sound _attackSound;
+        Sound _damageSound;
 
         public Player() : base("player_tile.png", 8, 1)
         {
             _attackSound = new Sound("Attack_sound_player.wav", false, false);
+            _damageSound = new Sound("damage_sound_player.wav", false, false);
 
             Spawn();
 
@@ -184,11 +185,8 @@ namespace GXPEngine
         {
             SetFrame(0);
 
-            SetXY(game.width / 2, game.height / 2);
+            SetXY(game.width / 2 + 50, game.height / 2);
             SetOrigin(width / 2, 0);
-
-            _healthbar = new Healthbar();
-            AddChild(_healthbar);
 
             _hitbox_player = new Hitbox_Player();
             AddChild(_hitbox_player);
@@ -202,11 +200,11 @@ namespace GXPEngine
         {
             if (Input.GetKey(Key.A))
             {
-                speedX -= 10f;
+                speedX -= 5f;
             }
             if (Input.GetKey(Key.D))
             {
-                speedX += 10f;
+                speedX += 5f;
             }
 
             if (Input.GetKeyDown(Key.D))
@@ -304,6 +302,7 @@ namespace GXPEngine
             if (other is Enemy)
             {
                 Globals.health = Globals.health - 1;
+                _damageSound.Play();
             }
         }
 

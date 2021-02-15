@@ -13,11 +13,13 @@ namespace GXPEngine
         bool goToLeft;
         bool goToRight;
 
+        float countFrames;
+
         Hitbox_Enemy _hitbox_enemy;
 
         Sound _deadSound;
 
-        public Enemy() : base("enemy_tile.png", 4, 1)
+        public Enemy() : base("enemy_tile.png", 4, 2)
         {
             _deadSound = new Sound("Dead_sound_enemy.wav", false, false);
 
@@ -54,6 +56,14 @@ namespace GXPEngine
             {
                 NextFrame();
                 step = 0;
+
+                countFrames = countFrames + 1;
+            }
+
+            if (countFrames >= 3)
+            {
+                SetFrame(0);
+                countFrames = 0;
             }
         }
 

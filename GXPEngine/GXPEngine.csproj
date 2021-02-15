@@ -50,6 +50,7 @@
     <Compile Include="Healthbar.cs" />
     <Compile Include="Hitbox_Enemy.cs" />
     <Compile Include="Hitbox_Player.cs" />
+    <Compile Include="HUD_Player.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level1_Background.cs" />
     <Compile Include="Player.cs" />
