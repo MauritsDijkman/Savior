@@ -1,16 +1,16 @@
 using GXPEngine;                                // GXPEngine contains the engine
 
-//Dit is een test om te kijken of GitKraken werkt.
-
 static class Globals
 {
     public static int health;
     public static float playerX;
     public static float countFramesAttack;
+    public static float countFramesAttackEnemy;
     public static bool aIsPressed;
     public static bool dIsPressed;
     public static bool EnemyIsDead;
     public static bool playerIsAttacking;
+    public static bool enemyIsAttacking;
     public static float FPS_Game;
     public static bool playerIsDead;
 }
@@ -193,7 +193,7 @@ public class MyGame : Game
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private void HandleUnpause()
     {
-        if (unpauseIsPressed == true || Input.GetKeyDown(Key.U))
+        if (unpauseIsPressed == true)
         {
             _level1.Unpause();
             gameIsPaused = false;

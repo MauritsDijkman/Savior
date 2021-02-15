@@ -11,9 +11,9 @@ namespace GXPEngine
 
         Enemy enemy1;
         Enemy enemy2;
-        Enemy enemy3;
-        Enemy enemy4;
-        Enemy enemy5;
+        //Enemy enemy3;
+        //Enemy enemy4;
+        //Enemy enemy5;
 
         public Level1() : base()
         {
@@ -31,8 +31,11 @@ namespace GXPEngine
             player = new Player();
             AddChild(player);
 
-            enemy1 = new Enemy(1220, 700, 1440, 2880);
+            enemy1 = new Enemy(2000, 830, 1440, 2880);
             AddChild(enemy1);
+
+            enemy2 = new Enemy(4000, 830, 3999, 5000);
+            AddChild(enemy2);
 
             _block_jump = new Block_Jump();
             AddChild(_block_jump);

@@ -31,12 +31,10 @@ namespace GXPEngine
         Hitbox_Player _hitbox_player;
 
         Sound _attackSound;
-        Sound _damageSound;
 
         public Player() : base("player_tile.png", 8, 1)
         {
             _attackSound = new Sound("Attack_sound_player.wav", false, false);
-            _damageSound = new Sound("damage_sound_player.wav", false, false);
 
             Spawn();
 
@@ -186,11 +184,10 @@ namespace GXPEngine
             SetFrame(0);
 
             SetXY(game.width / 2 + 50, game.height / 2);
-            SetOrigin(width / 2, 0);
+            SetOrigin(width / 2, height);
 
             _hitbox_player = new Hitbox_Player();
             AddChild(_hitbox_player);
-
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -258,9 +255,9 @@ namespace GXPEngine
         void HandleBorders()
         {
             x = Mathf.Clamp(x, 700, 13700);
-            y = Mathf.Clamp(y, (0), (1080 - height - 260));
+            y = Mathf.Clamp(y, (0), (830));
 
-            if (y >= (1080 - height - 260))
+            if (y >= (830))
             {
                 isLanded = true;
             }
@@ -292,18 +289,6 @@ namespace GXPEngine
                 y = previousY;
             }
             return (hasCollided == false);
-        }
-
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        OnCollision()
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        public void OnCollision(GameObject other)
-        {
-            if (other is Enemy)
-            {
-                Globals.health = Globals.health - 1;
-                _damageSound.Play();
-            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
