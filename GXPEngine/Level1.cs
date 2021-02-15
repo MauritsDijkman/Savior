@@ -7,7 +7,13 @@ namespace GXPEngine
     {
         Player player;
         Level1_Background background;
+        Block_Jump _block_jump;
+
         Enemy enemy1;
+        Enemy enemy2;
+        Enemy enemy3;
+        Enemy enemy4;
+        Enemy enemy5;
 
         public Level1() : base()
         {
@@ -25,8 +31,14 @@ namespace GXPEngine
             player = new Player();
             AddChild(player);
 
-            enemy1 = new Enemy();
+            enemy1 = new Enemy(1220, 700, 1440, 2880);
             AddChild(enemy1);
+
+            _block_jump = new Block_Jump();
+            AddChild(_block_jump);
+
+            _block_jump.x = 5040;
+            _block_jump.y = 600;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

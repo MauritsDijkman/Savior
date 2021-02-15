@@ -19,11 +19,14 @@ namespace GXPEngine
 
         Sound _deadSound;
 
-        public Enemy() : base("enemy_tile.png", 4, 2)
+        public Enemy(float enemyX, float enemyY, float minimalX, float maximalX) : base("enemy_tile.png", 4, 2)
         {
             _deadSound = new Sound("Dead_sound_enemy.wav", false, false);
 
             Spawn();
+
+            x = enemyX;
+            y = enemyY;
 
             animationDrawsBetweenFrames = 10;
             speed = 5;
@@ -36,7 +39,7 @@ namespace GXPEngine
         {
             SetFrame(1);
 
-            SetXY(1440 / 2 + 500, 700);
+            SetXY(enemyX, enemyY);
             SetOrigin(width / 2, height / 2);
 
             goToRight = true;
@@ -72,13 +75,16 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleMovement()
         {
-            if (x >= 2880)
+            if (x >= maximalX)
             {
                 goToRight = false;
                 goToLeft = true;
             }
 
-            if (x <= 1440)
+            //1440
+            //2880
+
+            if (x <= minimalX)
             {
                 goToLeft = false;
                 goToRight = true;

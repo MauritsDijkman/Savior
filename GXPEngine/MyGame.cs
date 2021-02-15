@@ -1,5 +1,7 @@
 using GXPEngine;                                // GXPEngine contains the engine
 
+//Dit is een test om te kijken of GitKraken werkt.
+
 static class Globals
 {
     public static int health;
