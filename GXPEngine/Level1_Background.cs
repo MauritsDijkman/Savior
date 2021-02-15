@@ -5,10 +5,10 @@ namespace GXPEngine
 {
     public class Level1_Background : Sprite
     {
-        public Level1_Background() : base("background_level1_tile.png")
+        public Level1_Background() : base("background_level1.png")
         {
-            SetOrigin(width / 2, height / 2);
-            SetXY(game.width / 2, game.height / 2);
+            //SetOrigin(width / 2, height / 2);
+            //SetXY(game.width / 2, game.height / 2);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -16,25 +16,25 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            if (Globals.aIsPressed == true && Globals.playerX <= 200)
-            {
-                x = x + 6;
-            }
+            //if (Globals.aIsPressed == true && Globals.playerX <= 200)
+            //{
+            //    x = x + 6;
+            //}
 
-            if (Globals.dIsPressed == true && Globals.playerX >= 1220)
-            {
-                x = x + -6;
-            }
+            //if (Globals.dIsPressed == true && Globals.playerX >= 1220)
+            //{
+            //    x = x + -6;
+            //}
 
-            if (x <= -7200)
-            {
-                x = -7200;
-            }
+            //if (x <= -7200)
+            //{
+            //    x = -7200;
+            //}
 
-            if (x >= width)
-            {
-                x = width;
-            }
+            //if (x >= width)
+            //{
+            //    x = width;
+            //}
         }
     }
 }

@@ -42,7 +42,7 @@ namespace GXPEngine
             animationDrawsBetweenFramesWalk = 5;
             animationDrawsBetweenFramesAttack = 5;
 
-            speedX = 50;
+            speedX = 5;
             speedY = 0;
 
             SetState(PlayerState.Walk);
@@ -202,11 +202,11 @@ namespace GXPEngine
         {
             if (Input.GetKey(Key.A))
             {
-                speedX -= 1f;
+                speedX -= 10f;
             }
             if (Input.GetKey(Key.D))
             {
-                speedX += 1f;
+                speedX += 10f;
             }
 
             if (Input.GetKeyDown(Key.D))
@@ -246,7 +246,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleVerticalMovement()
         {
-            speedY = speedY + 2f;
+            speedY = speedY + 1.5f;
             if (MoveWithCollision(0f, speedY) == false)
             {
                 speedY = 0f;
@@ -259,7 +259,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleBorders()
         {
-            x = Mathf.Clamp(x, (0 + (width / 4 + 100)), (1440 - (width / 4 + 100)));
+            x = Mathf.Clamp(x, 700, 13700);
             y = Mathf.Clamp(y, (0), (1080 - height - 260));
 
             if (y >= (1080 - height - 260))
@@ -304,8 +304,6 @@ namespace GXPEngine
             if (other is Enemy)
             {
                 Globals.health = Globals.health - 1;
-                MyGame mygame = game as MyGame;
-                mygame.stopMusic();
             }
         }
 

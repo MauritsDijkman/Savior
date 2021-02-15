@@ -5,11 +5,11 @@ namespace GXPEngine
 {
     public class Level1 : GameObject
     {
-        Level1_Background background;
-        //Block_Jump block_jump;
         Player player;
+        Level1_Background background;
         Enemy enemy1;
 
+        //Block_Jump block_jump;
         public Level1() : base()
         {
             StartLevel();
@@ -20,17 +20,19 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void StartLevel()
         {
+            //AddChild(new Sprite("background_level1.png"));
+
             background = new Level1_Background();
             AddChild(background);
 
-            //block_jump = new Block_Jump();
-            //AddChild(block_jump);
+            player = new Player();
+            AddChild(player);
 
             enemy1 = new Enemy();
             AddChild(enemy1);
 
-            player = new Player();
-            AddChild(player);
+            //block_jump = new Block_Jump();
+            //AddChild(block_jump);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -38,7 +40,11 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
+            if (player.x + x > 800) x = 800 - player.x;
+            if (player.x + x < 500) x = 500 - player.x;
 
+            //if (player.x + x > 1220) x = 1220 - player.x;
+            //if (player.x + x < 200) x = 200 - player.x;
         }
     }
 }

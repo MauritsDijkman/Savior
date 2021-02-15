@@ -29,6 +29,7 @@ namespace GXPEngine
             if (Globals.health == 0)
             {
                 MyGame mygame = game as MyGame;
+                mygame.stopMusic();
                 mygame.GameOver();
             }
         }
