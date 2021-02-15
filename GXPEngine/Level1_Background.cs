@@ -16,12 +16,12 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            if (Globals.aIsPressed == true)
+            if (Globals.aIsPressed == true && Globals.playerX <= 200)
             {
                 x = x + 6;
             }
 
-            if (Globals.dIsPressed == true)
+            if (Globals.dIsPressed == true && Globals.playerX >= 1220)
             {
                 x = x + -6;
             }

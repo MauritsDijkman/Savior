@@ -42,7 +42,7 @@ namespace GXPEngine
             animationDrawsBetweenFramesWalk = 5;
             animationDrawsBetweenFramesAttack = 5;
 
-            speedX = 5;
+            speedX = 50;
             speedY = 0;
 
             SetState(PlayerState.Walk);
