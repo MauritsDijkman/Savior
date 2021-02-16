@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Block_Jump.cs" />
+    <Compile Include="Block_Jump2.cs" />
     <Compile Include="Button_Back.cs" />
     <Compile Include="Button_Credits.cs" />
     <Compile Include="Button_Quit.cs" />
@@ -49,12 +50,14 @@
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Healthbar.cs" />
     <Compile Include="Hitbox_Enemy.cs" />
+    <Compile Include="Hitbox_Fist.cs" />
     <Compile Include="Hitbox_Player.cs" />
     <Compile Include="HUD_Player.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level1_Background.cs" />
     <Compile Include="Level2.cs" />
     <Compile Include="Level2_Background.cs" />
+    <Compile Include="Level_Boss.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="StartMenu.cs" />
     <Compile Include="MyGame.cs" />

@@ -50,9 +50,9 @@ namespace GXPEngine
             this.maximalX = maximalX;
 
             animationDrawsBetweenFramesWalk = 10;
-            animationDrawsBetweenFramesAttack = 10;
+            animationDrawsBetweenFramesAttack = 5;
 
-            speed = 5;
+            speed = 3;
 
             SetState(EnemyState.Walk);
         }
@@ -158,6 +158,7 @@ namespace GXPEngine
             SetOrigin(width / 2, height);
 
             goToRight = true;
+            //Globals.EnemyGoToRight = true;
 
             _hitbox_enemy = new Hitbox_Enemy();
             AddChild(_hitbox_enemy);
@@ -170,14 +171,20 @@ namespace GXPEngine
         {
             if (x >= maximalX)
             {
+                //Globals.EnemyGoToRight = false;
+                //Globals.EnemyGoToLeft = true;
+
                 goToRight = false;
                 goToLeft = true;
             }
 
             if (x <= minimalX)
             {
-                goToLeft = false;
+                //Globals.EnemyGoToRight = true;
+                //Globals.EnemyGoToLeft = false;
+
                 goToRight = true;
+                goToLeft = false;
             }
 
             if (goToLeft == true)

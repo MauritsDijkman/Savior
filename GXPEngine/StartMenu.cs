@@ -128,7 +128,6 @@ namespace GXPEngine
 
             MyGame mygame = game as MyGame;
             mygame.CreateLevel1();
-            mygame.level1IsActive = true;
             mygame.startMusic();
         }
 

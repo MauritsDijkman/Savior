@@ -29,12 +29,16 @@ namespace GXPEngine
         int countFramesWalk;
 
         Hitbox_Player _hitbox_player;
+        Hitbox_Fist _hitbox_fist;
 
         Sound _attackSound;
 
         public Player() : base("player_tile.png", 8, 1)
         {
             _attackSound = new Sound("Attack_sound_player.wav", false, false);
+
+            Globals.MCfacingRight = true;
+            Globals.MCfacingLeft = false;
 
             Spawn();
 
@@ -188,6 +192,9 @@ namespace GXPEngine
 
             _hitbox_player = new Hitbox_Player();
             AddChild(_hitbox_player);
+
+            _hitbox_fist = new Hitbox_Fist();
+            AddChild(_hitbox_fist);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -198,10 +205,15 @@ namespace GXPEngine
             if (Input.GetKey(Key.A))
             {
                 speedX -= 5f;
+                Globals.MCfacingRight = false;
+                Globals.MCfacingLeft = true;
             }
+
             if (Input.GetKey(Key.D))
             {
                 speedX += 5f;
+                Globals.MCfacingRight = true;
+                Globals.MCfacingLeft = false;
             }
 
             if (Input.GetKeyDown(Key.D))
@@ -282,12 +294,18 @@ namespace GXPEngine
                 {
                     hasCollided = true;
                 }
+                if (other is Block_Jump2)
+                {
+                    hasCollided = true;
+                }
             }
+
             if (hasCollided == true)
             {
                 x = previousX;
                 y = previousY;
             }
+
             return (hasCollided == false);
         }
 

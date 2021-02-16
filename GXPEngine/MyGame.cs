@@ -6,13 +6,17 @@ static class Globals
     public static float playerX;
     public static float countFramesAttackPlayer;
     public static float countFramesAttackEnemy;
+    public static float FPS_Game;
     public static bool aIsPressed;
     public static bool dIsPressed;
     public static bool EnemyIsDead;
     public static bool playerIsAttacking;
     public static bool enemyIsAttacking;
-    public static float FPS_Game;
     public static bool playerIsDead;
+    public static bool MCfacingRight;
+    public static bool MCfacingLeft;
+    public static bool EnemyGoToRight;
+    public static bool EnemyGoToLeft;
 }
 
 public class MyGame : Game
@@ -136,6 +140,8 @@ public class MyGame : Game
         CreatePauseMenu();
 
         Globals.playerIsDead = false;
+
+        level1IsActive = true;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -150,6 +156,9 @@ public class MyGame : Game
         CreatePauseMenu();
 
         Globals.playerIsDead = false;
+
+        level1IsActive = false;
+        level2IsActive = true;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -265,6 +274,16 @@ public class MyGame : Game
                     _level1.Remove();
 
                     CreateMenu();
+
+                    if (level1IsActive == true)
+                    {
+                        level1IsActive = false;
+                    }
+
+                    if (level2IsActive == true)
+                    {
+                        level2IsActive = false;
+                    }
                 }
             }
 

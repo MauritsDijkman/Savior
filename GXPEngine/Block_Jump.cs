@@ -5,9 +5,15 @@ namespace GXPEngine
 {
     public class Block_Jump : Sprite
     {
-        public Block_Jump() : base("block_jump.png")
+        float blockX;
+        float blockY;
+
+        public Block_Jump(float blockX, float blockY) : base("block_jump.png")
         {
-            SetXY(0, 0);
+            x = blockX;
+            y = blockY;
+
+            SetXY(blockX, blockY);
             SetOrigin(width / 2, height / 2);
         }
     }
