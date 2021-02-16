@@ -14,16 +14,16 @@ namespace GXPEngine
 
         public CreditsMenu() : base()
         {
-            creditsmenu = new Sprite("CreditsMenu.png");
+            creditsmenu = new Sprite("ControlsMenu.png");
             AddChild(creditsmenu);
 
             _back_button = new Button_Back();
             AddChild(_back_button);
 
-            back_button_normal = new Sprite("back_button_normal.png");
+            back_button_normal = new Sprite("back_main_button_normal.png");
             AddChild(back_button_normal);
 
-            back_button_hover = new Sprite("back_button_hover.png");
+            back_button_hover = new Sprite("back_main_button_hover.png");
             AddChild(back_button_hover);
         }
 

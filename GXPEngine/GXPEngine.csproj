@@ -53,6 +53,8 @@
     <Compile Include="HUD_Player.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level1_Background.cs" />
+    <Compile Include="Level2.cs" />
+    <Compile Include="Level2_Background.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="StartMenu.cs" />
     <Compile Include="MyGame.cs" />

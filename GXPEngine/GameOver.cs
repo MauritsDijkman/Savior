@@ -18,7 +18,7 @@ namespace GXPEngine
 
         public GameOver() : base()
         {
-            gameover = new Sprite("gameover.png");
+            gameover = new Sprite("GameOver.png");
             AddChild(gameover);
 
             _back_button = new Button_Back();
@@ -111,7 +111,7 @@ namespace GXPEngine
             DestroyGameOver();
 
             MyGame mygame = game as MyGame;
-            mygame.CreateGame();
+            mygame.CreateLevel1();
             mygame.startMusic();
         }
 

@@ -20,6 +20,7 @@ public class MyGame : Game
     private StartMenu _menu;
     private CreditsMenu _creditsmenu;
     private Level1 _level1;
+    private Level2 _level2;
     private GameOver _gameover;
     private HUD_Player _HUD_player;
 
@@ -31,7 +32,9 @@ public class MyGame : Game
     public static float timeSince;
 
     public bool quitIsPressed;
+
     public bool level1IsActive;
+    public bool level2IsActive;
 
     bool quitsoundHasPlayed;
     bool gameIsPaused;
@@ -122,13 +125,26 @@ public class MyGame : Game
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //                                                                                                                        CreateGame()
+    //                                                                                                                        CreateLevel1()
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void CreateGame()
+    public void CreateLevel1()
     {
         _level1 = new Level1();
         AddChild(_level1);
-        level1IsActive = true;
+
+        CreateHUD();
+        CreatePauseMenu();
+
+        Globals.playerIsDead = false;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        CreateLevel2()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void CreateLevel2()
+    {
+        _level2 = new Level2();
+        AddChild(_level2);
 
         CreateHUD();
         CreatePauseMenu();
@@ -185,6 +201,14 @@ public class MyGame : Game
                 gameIsPaused = true;
                 pause_menu.visible = true;
             }
+
+            if (level2IsActive == true)
+            {
+                _level2.Pause();
+                pauseMusic();
+                gameIsPaused = true;
+                pause_menu.visible = true;
+            }
         }
     }
 
@@ -195,7 +219,15 @@ public class MyGame : Game
     {
         if (unpauseIsPressed == true)
         {
-            _level1.Unpause();
+            if (level1IsActive == true)
+            {
+                _level1.Unpause();
+            }
+            if (level2IsActive == true)
+            {
+                _level2.Unpause();
+            }
+
             gameIsPaused = false;
 
             pause_menu.visible = false;

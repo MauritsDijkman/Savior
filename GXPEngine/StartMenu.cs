@@ -40,16 +40,16 @@ namespace GXPEngine
             start_button_hover = new Sprite("start_button_hover.png");
             AddChild(start_button_hover);
 
-            credits_button_normal = new Sprite("credits_button_normal.png");
+            credits_button_normal = new Sprite("controls_button_normal.png");
             AddChild(credits_button_normal);
 
-            credits_button_hover = new Sprite("credits_button_hover.png");
+            credits_button_hover = new Sprite("controls_button_hover.png");
             AddChild(credits_button_hover);
 
-            quit_button_normal = new Sprite("quit_button_normal.png");
+            quit_button_normal = new Sprite("exit_button_normal.png");
             AddChild(quit_button_normal);
 
-            quit_button_hover = new Sprite("quit_button_hover.png");
+            quit_button_hover = new Sprite("exit_button_hover.png");
             AddChild(quit_button_hover);
         }
 
@@ -127,7 +127,7 @@ namespace GXPEngine
             DestroyStartMenu();
 
             MyGame mygame = game as MyGame;
-            mygame.CreateGame();
+            mygame.CreateLevel1();
             mygame.level1IsActive = true;
             mygame.startMusic();
         }
