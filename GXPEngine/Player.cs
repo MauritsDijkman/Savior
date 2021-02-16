@@ -79,7 +79,7 @@ namespace GXPEngine
             if (newState == PlayerState.Attack)
             {
                 SetFrame(4);
-                Globals.countFramesAttack = 4;
+                Globals.countFramesAttackPlayer = 4;
             }
         }
 
@@ -165,11 +165,11 @@ namespace GXPEngine
             {
                 NextFrame();
                 stepAttack = 0;
-                Globals.countFramesAttack = Globals.countFramesAttack + 1;
+                Globals.countFramesAttackPlayer = Globals.countFramesAttackPlayer + 1;
                 Globals.playerIsAttacking = true;
             }
 
-            if (Globals.countFramesAttack >= 7)
+            if (Globals.countFramesAttackPlayer >= 7)
             {
                 Globals.playerIsAttacking = false;
                 SetState(PlayerState.Walk);

@@ -7,6 +7,9 @@ namespace GXPEngine
     {
         Sound _damageSound;
 
+        bool MCDamagetake;
+        float Damagecounter;
+
         public Hitbox_Player() : base("hitbox_player.png")
         {
             Spawn();
@@ -28,10 +31,22 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void OnCollision(GameObject other)
         {
-            if (other is Hitbox_Enemy)
+            if (MCDamagetake == false)
+            {
+                Damagecounter = Damagecounter + 1;
+            }
+
+            if (Damagecounter == 200)
+            {
+                MCDamagetake = true;
+                Damagecounter = 0;
+            }
+
+            if (other is Hitbox_Enemy && Globals.countFramesAttackEnemy == 6 && MCDamagetake == true)
             {
                 Globals.health = Globals.health - 1;
                 _damageSound.Play();
+                MCDamagetake = false;
             }
         }
 

@@ -7,7 +7,7 @@ public class HUD_Player : Canvas
 {
     Healthbar _healthbar;
 
-    public HUD_Player() : base(128, 64)
+    public HUD_Player() : base(128, 150)
     {
         Spawn();
     }
@@ -30,6 +30,6 @@ public class HUD_Player : Canvas
     void Update()
     {
         graphics.Clear(Color.Empty);
-        graphics.DrawString("FPS: " + Globals.FPS_Game, SystemFonts.DefaultFont, Brushes.White, 10, 30);
+        graphics.DrawString("FPS: " + Globals.FPS_Game, SystemFonts.DefaultFont, Brushes.White, 10, 80);
     }
 }

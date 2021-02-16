@@ -4,7 +4,7 @@ static class Globals
 {
     public static int health;
     public static float playerX;
-    public static float countFramesAttack;
+    public static float countFramesAttackPlayer;
     public static float countFramesAttackEnemy;
     public static bool aIsPressed;
     public static bool dIsPressed;

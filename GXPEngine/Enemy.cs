@@ -9,6 +9,7 @@ namespace GXPEngine
         Walk,
         Attack
     }
+
     public class Enemy : AnimationSprite
     {
         EnemyState currentState = EnemyState.None;
@@ -25,7 +26,6 @@ namespace GXPEngine
         bool goToRight;
 
         float countFramesWalk;
-        float countFramesAttack;
 
         Hitbox_Enemy _hitbox_enemy;
 
@@ -49,7 +49,9 @@ namespace GXPEngine
             this.minimalX = minimalX;
             this.maximalX = maximalX;
 
+            animationDrawsBetweenFramesWalk = 10;
             animationDrawsBetweenFramesAttack = 10;
+
             speed = 5;
 
             SetState(EnemyState.Walk);
@@ -102,9 +104,10 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //                                                                                                                        HandleWalkState()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
         private void HandleWalkState()
         {
+            HandleMovement();
+
             stepWalk = stepWalk + 1;
 
             if (stepWalk > animationDrawsBetweenFramesWalk)
@@ -114,7 +117,7 @@ namespace GXPEngine
                 countFramesWalk = countFramesWalk + 1;
             }
 
-            if (countFramesWalk >= 4)
+            if (countFramesWalk >= 3)
             {
                 SetFrame(0);
                 countFramesWalk = 0;
@@ -136,11 +139,11 @@ namespace GXPEngine
                 Globals.enemyIsAttacking = true;
             }
 
-            if (Globals.countFramesAttackEnemy >= 7)
+            if (Globals.countFramesAttackEnemy >= 8)
             {
                 Globals.enemyIsAttacking = false;
                 SetState(EnemyState.Walk);
-
+                speed = 5;
             }
         }
 
@@ -149,7 +152,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Spawn()
         {
-            SetFrame(1);
+            SetFrame(0);
 
             SetXY(enemyX, enemyY);
             SetOrigin(width / 2, height);
@@ -159,28 +162,6 @@ namespace GXPEngine
             _hitbox_enemy = new Hitbox_Enemy();
             AddChild(_hitbox_enemy);
         }
-
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleAnimation()
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //void HandleAnimation()
-        //{
-        //    step = step + 1;
-
-        //    if (step > animationDrawsBetweenFrames)
-        //    {
-        //        NextFrame();
-        //        step = 0;
-
-        //        countFrames = countFrames + 1;
-        //    }
-
-        //    if (countFrames >= 3)
-        //    {
-        //        SetFrame(0);
-        //        countFrames = 0;
-        //    }
-        //}
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //                                                                                                                        HandleMovement()
@@ -213,9 +194,9 @@ namespace GXPEngine
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        Dead()
+        //                                                                                                                        HandleDeath()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void Dead()
+        void HandleDeath()
         {
             if (Globals.EnemyIsDead == true)
             {
@@ -236,6 +217,7 @@ namespace GXPEngine
             if (other is Player)
             {
                 SetState(EnemyState.Attack);
+                speed = 0;
             }
         }
 
@@ -244,10 +226,11 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            Dead();
-            //HandleAnimation();
+            HandleState();
+
             HandleMovement();
 
+            HandleDeath();
         }
     }
 }
