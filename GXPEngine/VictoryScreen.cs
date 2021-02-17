@@ -97,6 +97,7 @@ namespace GXPEngine
             DestroyVictoryScreen();
 
             MyGame mygame = game as MyGame;
+            mygame.ResetWholeGame();
             mygame.CreateMenu();
         }
 
@@ -108,6 +109,7 @@ namespace GXPEngine
             DestroyVictoryScreen();
 
             MyGame mygame = game as MyGame;
+            mygame.ResetWholeGame();
             mygame.CreateLevel1();
             mygame.startMusic();
 

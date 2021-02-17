@@ -101,6 +101,7 @@ namespace GXPEngine
             DestroyGameOver();
 
             MyGame mygame = game as MyGame;
+            mygame.ResetWholeGame();
             mygame.CreateMenu();
 
         }
@@ -113,6 +114,7 @@ namespace GXPEngine
             DestroyGameOver();
 
             MyGame mygame = game as MyGame;
+            mygame.ResetWholeGame();
             mygame.CreateLevel1();
             mygame.startMusic();
 
