@@ -127,7 +127,7 @@ namespace GXPEngine
             DestroyStartMenu();
 
             MyGame mygame = game as MyGame;
-            mygame.CreateLevel1();
+            mygame.CreateBossLevel();
             mygame.startMusic();
         }
 

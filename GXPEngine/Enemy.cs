@@ -158,7 +158,6 @@ namespace GXPEngine
             SetOrigin(width / 2, height);
 
             goToRight = true;
-            //Globals.EnemyGoToRight = true;
 
             _hitbox_enemy = new Hitbox_Enemy();
             AddChild(_hitbox_enemy);
@@ -171,18 +170,12 @@ namespace GXPEngine
         {
             if (x >= maximalX)
             {
-                //Globals.EnemyGoToRight = false;
-                //Globals.EnemyGoToLeft = true;
-
                 goToRight = false;
                 goToLeft = true;
             }
 
             if (x <= minimalX)
             {
-                //Globals.EnemyGoToRight = true;
-                //Globals.EnemyGoToLeft = false;
-
                 goToRight = true;
                 goToLeft = false;
             }

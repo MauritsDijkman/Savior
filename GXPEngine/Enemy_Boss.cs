@@ -3,44 +3,63 @@ using GXPEngine;								// GXPEngine contains the engine
 
 namespace GXPEngine
 {
-    public class Level_Boss : GameObject
+    public class Enemy_Boss : AnimationSprite
     {
-        Player player;
-        LevelBoss_Background background;
-        Enemy_Boss enemy_boss;
+        float stepIdle;
+        float animationDrawsBetweenFramesIdle;
+        float countFramesIdle;
 
-        Block_Jump _block_jump;
+        float enemyX;
+        float enemyY;
 
-        public Level_Boss() : base()
+        public Enemy_Boss(float enemyX, float enemyY) : base("enemy_boss_tile.png", 7, 1)
         {
-            SetupLevel();
+            Spawn();
+
+            x = enemyX;
+            y = enemyY;
+
+            animationDrawsBetweenFramesIdle = 10;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        SetuptLevel()
+        //                                                                                                                        Spawn()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void SetupLevel()
+        void Spawn()
         {
-            background = new LevelBoss_Background();
-            AddChild(background);
+            SetFrame(0);
 
-            enemy_boss = new Enemy_Boss(1440, 0);
-            AddChild(enemy_boss);
-
-            player = new Player();
-            AddChild(player);
-
-            _block_jump = new Block_Jump(360, 550);
-            AddChild(_block_jump);
+            SetXY(enemyX, enemyY);
+            SetOrigin(width, 0);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleAnimation()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleAnimation()
+        {
+            stepIdle = stepIdle + 1;
+
+            if (stepIdle > animationDrawsBetweenFramesIdle)
+            {
+                NextFrame();
+                stepIdle = 0;
+                countFramesIdle = countFramesIdle + 1;
+            }
+
+            if (countFramesIdle >= 7)
+            {
+                SetFrame(0);
+                countFramesIdle = 0;
+            }
+        }
+
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //                                                                                                                        Update()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-
+            HandleAnimation();
         }
     }
 }

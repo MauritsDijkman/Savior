@@ -266,7 +266,18 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleBorders()
         {
-            x = Mathf.Clamp(x, 700, 13700);
+            MyGame mygame = game as MyGame;
+
+            if (mygame.level1IsActive == true || mygame.level2IsActive == true)
+            {
+                x = Mathf.Clamp(x, 700, 13700);
+            }
+
+            if (mygame.levelBossIsActive == true)
+            {
+                x = Mathf.Clamp(x, (0 + width / 2), (1440 - width / 2));
+            }
+
             y = Mathf.Clamp(y, (0), (830));
 
             if (y >= (830))

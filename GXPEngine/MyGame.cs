@@ -25,6 +25,7 @@ public class MyGame : Game
     private CreditsMenu _creditsmenu;
     private Level1 _level1;
     private Level2 _level2;
+    private Level_Boss _levelBoss;
     private GameOver _gameover;
     private HUD_Player _HUD_player;
 
@@ -39,6 +40,7 @@ public class MyGame : Game
 
     public bool level1IsActive;
     public bool level2IsActive;
+    public bool levelBossIsActive;
 
     bool quitsoundHasPlayed;
     bool gameIsPaused;
@@ -63,7 +65,11 @@ public class MyGame : Game
 
         quitIsPressed = false;
         quitsoundHasPlayed = false;
+
         level1IsActive = false;
+        level2IsActive = false;
+        levelBossIsActive = false;
+
         gameIsPaused = false;
 
         CreateMenu();
@@ -142,6 +148,8 @@ public class MyGame : Game
         Globals.playerIsDead = false;
 
         level1IsActive = true;
+        level2IsActive = false;
+        levelBossIsActive = false;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -159,6 +167,25 @@ public class MyGame : Game
 
         level1IsActive = false;
         level2IsActive = true;
+        levelBossIsActive = false;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        CreateBossLevel()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void CreateBossLevel()
+    {
+        _levelBoss = new Level_Boss();
+        AddChild(_levelBoss);
+
+        CreateHUD();
+        CreatePauseMenu();
+
+        Globals.playerIsDead = false;
+
+        level1IsActive = false;
+        level2IsActive = false;
+        levelBossIsActive = true;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -166,8 +193,23 @@ public class MyGame : Game
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void GameOver()
     {
-        _level1.Destroy();
-        _level1.Remove();
+        if (level1IsActive == true)
+        {
+            _level1.Destroy();
+            _level1.Remove();
+        }
+
+        if (level2IsActive == true)
+        {
+            _level2.Destroy();
+            _level2.Remove();
+        }
+
+        if (levelBossIsActive == true)
+        {
+            _levelBoss.Destroy();
+            _levelBoss.Remove();
+        }
 
         stopMusic();
 
@@ -218,6 +260,14 @@ public class MyGame : Game
                 gameIsPaused = true;
                 pause_menu.visible = true;
             }
+
+            if (levelBossIsActive == true)
+            {
+                _levelBoss.Pause();
+                pauseMusic();
+                gameIsPaused = true;
+                pause_menu.visible = true;
+            }
         }
     }
 
@@ -232,9 +282,15 @@ public class MyGame : Game
             {
                 _level1.Unpause();
             }
+
             if (level2IsActive == true)
             {
                 _level2.Unpause();
+            }
+
+            if (levelBossIsActive == true)
+            {
+                _levelBoss.Unpause();
             }
 
             gameIsPaused = false;
@@ -283,6 +339,11 @@ public class MyGame : Game
                     if (level2IsActive == true)
                     {
                         level2IsActive = false;
+                    }
+
+                    if (levelBossIsActive == true)
+                    {
+                        levelBossIsActive = false;
                     }
                 }
             }
