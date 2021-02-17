@@ -49,7 +49,9 @@
     <Compile Include="GameOver.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
+    <Compile Include="Healthbar_Boss.cs" />
     <Compile Include="Healthbar_Player.cs" />
+    <Compile Include="Hitbox_Boss.cs" />
     <Compile Include="Hitbox_Enemy.cs" />
     <Compile Include="Hitbox_Fist.cs" />
     <Compile Include="Hitbox_Player.cs" />

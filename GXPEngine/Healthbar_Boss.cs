@@ -3,59 +3,35 @@ using GXPEngine;
 
 namespace GXPEngine
 {
-    class Hitbox_Player : Sprite
+    class Healthbar_Boss : AnimationSprite
     {
-        Sound _damageSound;
+        Sound _deathSound;
 
-        bool MCDamagetake;
-        float Damagecounter;
-
-        public Hitbox_Player() : base("hitbox_player.png")
+        public Healthbar_Boss() : base("healthbar_tile.png", 6, 1)
         {
-            _damageSound = new Sound("damage_sound_player.wav", false, false);
+            Spawn();
 
-            visible = false;
+            _deathSound = new Sound("death_sound_boss.wav", false, false);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HitboxUpdate()
+        //                                                                                                                        Spawn()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HitboxUpdate()
+        void Spawn()
         {
-            if (Globals.MCfacingLeft == false && Globals.MCfacingRight == true)
-            {
-                SetOrigin(width / 2, height / 2);
-                SetXY(5, -100);
-            }
-
-            if (Globals.MCfacingLeft == true && Globals.MCfacingRight == false)
-            {
-                SetOrigin(width / 2, height / 2);
-                SetXY(-5, -100);
-            }
+            Globals.health_boss = 5;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        OnCollision()
+        //                                                                                                                        Death()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        public void OnCollision(GameObject other)
+        void Death()
         {
-            if (MCDamagetake == false)
+            if (Globals.health_boss == 0 && Globals.bossIsDead == false)
             {
-                Damagecounter = Damagecounter + 1;
-            }
-
-            if (Damagecounter == 200)
-            {
-                MCDamagetake = true;
-                Damagecounter = 0;
-            }
-
-            if (other is Hitbox_Enemy && Globals.countFramesAttackEnemy == 6 && MCDamagetake == true)
-            {
-                Globals.health_player = Globals.health_player - 1;
-                _damageSound.Play();
-                MCDamagetake = false;
+                Globals.bossIsDead = true;
+                                
+                _deathSound.Play();
             }
         }
 
@@ -64,7 +40,8 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            HitboxUpdate();
+            SetFrame(Globals.health_boss);
+            Death();
         }
     }
 }

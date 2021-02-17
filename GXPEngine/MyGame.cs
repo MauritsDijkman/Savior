@@ -2,7 +2,8 @@ using GXPEngine;                                // GXPEngine contains the engine
 
 static class Globals
 {
-    public static int health;
+    public static int health_player;
+    public static int health_boss;
     public static float playerX;
     public static float countFramesAttackPlayer;
     public static float countFramesAttackEnemy;
@@ -12,7 +13,9 @@ static class Globals
     public static bool EnemyIsDead;
     public static bool playerIsAttacking;
     public static bool enemyIsAttacking;
+    public static bool bossIsAttacking;
     public static bool playerIsDead;
+    public static bool bossIsDead;
     public static bool MCfacingRight;
     public static bool MCfacingLeft;
     public static bool EnemyGoToRight;

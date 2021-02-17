@@ -3,36 +3,22 @@ using GXPEngine;
 
 namespace GXPEngine
 {
-    class Hitbox_Player : Sprite
+    class Hitbox_Boss : Sprite
     {
-        Sound _damageSound;
-
-        bool MCDamagetake;
-        float Damagecounter;
-
-        public Hitbox_Player() : base("hitbox_player.png")
+        public Hitbox_Boss() : base("hitbox_boss.png")
         {
-            _damageSound = new Sound("damage_sound_player.wav", false, false);
-
             visible = false;
+
+            Spawn();
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HitboxUpdate()
+        //                                                                                                                        Spawn()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HitboxUpdate()
+        void Spawn()
         {
-            if (Globals.MCfacingLeft == false && Globals.MCfacingRight == true)
-            {
-                SetOrigin(width / 2, height / 2);
-                SetXY(5, -100);
-            }
-
-            if (Globals.MCfacingLeft == true && Globals.MCfacingRight == false)
-            {
-                SetOrigin(width / 2, height / 2);
-                SetXY(-5, -100);
-            }
+            SetOrigin(width / 2, height / 2);
+            SetXY(-300, 413);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,22 +26,9 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void OnCollision(GameObject other)
         {
-            if (MCDamagetake == false)
+            if (other is Hitbox_Fist && Globals.bossIsAttacking == false && Globals.bossIsDead == false)
             {
-                Damagecounter = Damagecounter + 1;
-            }
-
-            if (Damagecounter == 200)
-            {
-                MCDamagetake = true;
-                Damagecounter = 0;
-            }
-
-            if (other is Hitbox_Enemy && Globals.countFramesAttackEnemy == 6 && MCDamagetake == true)
-            {
-                Globals.health_player = Globals.health_player - 1;
-                _damageSound.Play();
-                MCDamagetake = false;
+                Globals.health_boss = Globals.health_boss - 1;
             }
         }
 
@@ -64,7 +37,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            HitboxUpdate();
+
         }
     }
 }
