@@ -17,6 +17,7 @@ static class Globals
     public static bool MCfacingLeft;
     public static bool EnemyGoToRight;
     public static bool EnemyGoToLeft;
+    public static bool showMouseCursor;
 }
 
 public class MyGame : Game
@@ -27,7 +28,7 @@ public class MyGame : Game
     private Level2 _level2;
     private Level_Boss _levelBoss;
     private GameOver _gameover;
-    private HUD_Player _HUD_player;
+    private HUD _HUD_player;
 
     Sound _quitSound;
 
@@ -130,7 +131,7 @@ public class MyGame : Game
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     void CreateHUD()
     {
-        _HUD_player = new HUD_Player();
+        _HUD_player = new HUD();
         AddChild(_HUD_player);
     }
 
@@ -146,6 +147,7 @@ public class MyGame : Game
         CreatePauseMenu();
 
         Globals.playerIsDead = false;
+        Globals.showMouseCursor = false;
 
         level1IsActive = true;
         level2IsActive = false;
@@ -164,6 +166,7 @@ public class MyGame : Game
         CreatePauseMenu();
 
         Globals.playerIsDead = false;
+        Globals.showMouseCursor = false;
 
         level1IsActive = false;
         level2IsActive = true;
@@ -182,6 +185,7 @@ public class MyGame : Game
         CreatePauseMenu();
 
         Globals.playerIsDead = false;
+        Globals.showMouseCursor = false;
 
         level1IsActive = false;
         level2IsActive = false;
@@ -245,6 +249,8 @@ public class MyGame : Game
     {
         if (Input.GetKeyDown(Key.P) && gameIsPaused == false)
         {
+            Globals.showMouseCursor = true;
+
             if (level1IsActive == true)
             {
                 _level1.Pause();
@@ -320,31 +326,40 @@ public class MyGame : Game
                 {
                     unpauseMusic();
                     unpauseIsPressed = true;
+                    Globals.showMouseCursor = false;
                 }
 
                 if (_button_backmain.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
                     unpauseIsPressed = true;
                     stopMusic();
-                    _level1.Destroy();
-                    _level1.Remove();
-
-                    CreateMenu();
+                    Globals.showMouseCursor = true;
 
                     if (level1IsActive == true)
                     {
+                        _level1.Destroy();
+                        _level1.Remove();
+
                         level1IsActive = false;
                     }
 
                     if (level2IsActive == true)
                     {
+                        _level2.Destroy();
+                        _level2.Remove();
+
                         level2IsActive = false;
                     }
 
                     if (levelBossIsActive == true)
                     {
+                        _levelBoss.Destroy();
+                        _levelBoss.Remove();
+
                         levelBossIsActive = false;
                     }
+
+                    CreateMenu();
                 }
             }
 
@@ -369,6 +384,22 @@ public class MyGame : Game
                 back_main_button_normal.visible = true;
                 back_main_button_hover.visible = false;
             }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        HandleMouseCursor()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    void HandleMouseCursor()
+    {
+        if (Globals.showMouseCursor == true)
+        {
+            ShowMouse(true);
+        }
+
+        if (Globals.showMouseCursor == false)
+        {
+            ShowMouse(false);
         }
     }
 
@@ -417,6 +448,8 @@ public class MyGame : Game
         HandleUnpause();
 
         HandlePauseButton();
+
+        HandleMouseCursor();
 
         Globals.FPS_Game = targetFps;
     }

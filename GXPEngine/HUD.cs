@@ -3,11 +3,11 @@ using GXPEngine;                                // GXPEngine contains the engine
 using System.Drawing;
 using System.Drawing.Text;
 
-public class HUD_Player : Canvas
+public class HUD : Canvas
 {
     Healthbar_Player _healthbar;
 
-    public HUD_Player() : base(128, 150)
+    public HUD() : base(128, 150)
     {
         Spawn();
     }

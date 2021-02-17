@@ -49,11 +49,11 @@
     <Compile Include="GameOver.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
-    <Compile Include="Healthbar.cs" />
+    <Compile Include="Healthbar_Player.cs" />
     <Compile Include="Hitbox_Enemy.cs" />
     <Compile Include="Hitbox_Fist.cs" />
     <Compile Include="Hitbox_Player.cs" />
-    <Compile Include="HUD_Player.cs" />
+    <Compile Include="HUD.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level1_Background.cs" />
     <Compile Include="Level2.cs" />
