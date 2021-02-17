@@ -5,7 +5,7 @@ using System.Drawing.Text;
 
 public class HUD_Player : Canvas
 {
-    Healthbar _healthbar;
+    Healthbar_Player _healthbar;
 
     public HUD_Player() : base(128, 150)
     {
@@ -17,7 +17,7 @@ public class HUD_Player : Canvas
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     void Spawn()
     {
-        _healthbar = new Healthbar();
+        _healthbar = new Healthbar_Player();
         AddChild(_healthbar);
 
         _healthbar.x = 10;

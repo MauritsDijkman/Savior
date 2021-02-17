@@ -3,11 +3,11 @@ using GXPEngine;								// GXPEngine contains the engine
 
 namespace GXPEngine
 {
-    class Healthbar : AnimationSprite
+    class Healthbar_Player : AnimationSprite
     {
         Sound _deathSound;
 
-        public Healthbar() : base("healthbar_tile.png", 6, 1)
+        public Healthbar_Player() : base("healthbar_tile.png", 6, 1)
         {
             Spawn();
 
