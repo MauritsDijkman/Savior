@@ -5,9 +5,12 @@ namespace GXPEngine
 {
     class Hitbox_Boss : Sprite
     {
+        bool BossDamagetake;
+        float Damagecounter;
+
         public Hitbox_Boss() : base("hitbox_boss.png")
         {
-            visible = false;
+            //visible = false;
 
             Spawn();
         }
@@ -18,7 +21,11 @@ namespace GXPEngine
         void Spawn()
         {
             SetOrigin(width / 2, height / 2);
-            SetXY(-300, 413);
+            SetXY(-240, 590);
+
+            Globals.bossIsAttacking = false;
+            Globals.bossIsDead = false;
+            BossDamagetake = true;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,9 +33,33 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void OnCollision(GameObject other)
         {
-            if (other is Hitbox_Fist && Globals.bossIsAttacking == false && Globals.bossIsDead == false)
+            if (BossDamagetake == false)
+            {
+                Damagecounter = Damagecounter + 1;
+            }
+
+            if (Damagecounter == 200)
+            {
+                BossDamagetake = true;
+                Damagecounter = 0;
+            }
+
+            if (other is Hitbox_Fist && Globals.bossIsAttacking == false && Globals.bossIsDead == false && Globals.playerIsAttacking == true && BossDamagetake == true)
             {
                 Globals.health_boss = Globals.health_boss - 1;
+                BossDamagetake = false;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleDeath()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleDeath()
+        {
+            if (Globals.bossIsDead == true)
+            {
+                LateDestroy();
+                LateRemove();
             }
         }
 
@@ -37,7 +68,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-
+            HandleDeath();
         }
     }
 }

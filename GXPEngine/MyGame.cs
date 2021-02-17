@@ -21,6 +21,7 @@ static class Globals
     public static bool EnemyGoToRight;
     public static bool EnemyGoToLeft;
     public static bool showMouseCursor;
+    public static bool bossDeathSoundHasPlayed;
 }
 
 public class MyGame : Game
@@ -189,6 +190,8 @@ public class MyGame : Game
 
         Globals.playerIsDead = false;
         Globals.showMouseCursor = false;
+        Globals.bossIsDead = false;
+        Globals.bossDeathSoundHasPlayed = false;
 
         level1IsActive = false;
         level2IsActive = false;

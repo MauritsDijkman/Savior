@@ -20,18 +20,23 @@ namespace GXPEngine
         void Spawn()
         {
             Globals.health_boss = 5;
+            Globals.bossDeathSoundHasPlayed = false;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        Death()
+        //                                                                                                                        HandleDeath()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void Death()
+        void HandleDeath()
         {
             if (Globals.health_boss == 0 && Globals.bossIsDead == false)
             {
                 Globals.bossIsDead = true;
-                                
-                _deathSound.Play();
+
+                if (Globals.bossDeathSoundHasPlayed == false)
+                {
+                    _deathSound.Play();
+                    Globals.bossDeathSoundHasPlayed = true;
+                }
             }
         }
 
@@ -41,7 +46,7 @@ namespace GXPEngine
         void Update()
         {
             SetFrame(Globals.health_boss);
-            Death();
+            HandleDeath();
         }
     }
 }

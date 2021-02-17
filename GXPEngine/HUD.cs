@@ -5,9 +5,10 @@ using System.Drawing.Text;
 
 public class HUD : Canvas
 {
-    Healthbar_Player _healthbar;
+    Healthbar_Player _healthbar_player;
+    Healthbar_Boss _healthbar_boss;
 
-    public HUD() : base(128, 150)
+    public HUD() : base(1440, 1080)
     {
         Spawn();
     }
@@ -17,11 +18,17 @@ public class HUD : Canvas
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     void Spawn()
     {
-        _healthbar = new Healthbar_Player();
-        AddChild(_healthbar);
+        _healthbar_player = new Healthbar_Player();
+        AddChild(_healthbar_player);
 
-        _healthbar.x = 10;
-        _healthbar.y = 10;
+        _healthbar_player.x = 10;
+        _healthbar_player.y = 10;
+
+        _healthbar_boss = new Healthbar_Boss();
+        AddChild(_healthbar_boss);
+
+        _healthbar_boss.x = 1020;
+        _healthbar_boss.y = 10;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
