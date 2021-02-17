@@ -229,10 +229,10 @@ namespace GXPEngine
                 _grenade = new Grenade(-1075, -100, 490);
                 AddChild(_grenade);
 
-                _grenade = new Grenade(-800, -100, 700);
+                _grenade = new Grenade(-800, -100, 790);
                 AddChild(_grenade);
 
-                _grenade = new Grenade(-1300, -100, 700);
+                _grenade = new Grenade(-1300, -100, 790);
                 AddChild(_grenade);
 
                 granadesHaveSpawned = true;
