@@ -22,16 +22,19 @@ static class Globals
     public static bool EnemyGoToLeft;
     public static bool showMouseCursor;
     public static bool bossDeathSoundHasPlayed;
+    public static bool levelBossIsActive;
+    public static bool GrenadeDoesDamage;
 }
 
 public class MyGame : Game
 {
     private StartMenu _menu;
     private CreditsMenu _creditsmenu;
+    private GameOver _gameover;
+    private VictoryScreen _victoryscreen;
     private Level1 _level1;
     private Level2 _level2;
     private Level_Boss _levelBoss;
-    private GameOver _gameover;
     private HUD _HUD_player;
 
     Sound _quitSound;
@@ -45,7 +48,6 @@ public class MyGame : Game
 
     public bool level1IsActive;
     public bool level2IsActive;
-    public bool levelBossIsActive;
 
     bool quitsoundHasPlayed;
     bool gameIsPaused;
@@ -73,7 +75,7 @@ public class MyGame : Game
 
         level1IsActive = false;
         level2IsActive = false;
-        levelBossIsActive = false;
+        Globals.levelBossIsActive = false;
 
         gameIsPaused = false;
 
@@ -155,7 +157,7 @@ public class MyGame : Game
 
         level1IsActive = true;
         level2IsActive = false;
-        levelBossIsActive = false;
+        Globals.levelBossIsActive = false;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -174,7 +176,7 @@ public class MyGame : Game
 
         level1IsActive = false;
         level2IsActive = true;
-        levelBossIsActive = false;
+        Globals.levelBossIsActive = false;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -195,7 +197,7 @@ public class MyGame : Game
 
         level1IsActive = false;
         level2IsActive = false;
-        levelBossIsActive = true;
+        Globals.levelBossIsActive = true;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -215,7 +217,7 @@ public class MyGame : Game
             _level2.Remove();
         }
 
-        if (levelBossIsActive == true)
+        if (Globals.levelBossIsActive == true)
         {
             _levelBoss.Destroy();
             _levelBoss.Remove();
@@ -225,6 +227,35 @@ public class MyGame : Game
 
         _gameover = new GameOver();
         AddChild(_gameover);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        CreateVictoryScreen()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void CreateVictoryScreen()
+    {
+        if (level1IsActive == true)
+        {
+            _level1.Destroy();
+            _level1.Remove();
+        }
+
+        if (level2IsActive == true)
+        {
+            _level2.Destroy();
+            _level2.Remove();
+        }
+
+        if (Globals.levelBossIsActive == true)
+        {
+            _levelBoss.Destroy();
+            _levelBoss.Remove();
+        }
+
+        stopMusic();
+
+        _victoryscreen = new VictoryScreen();
+        AddChild(_victoryscreen);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -273,7 +304,7 @@ public class MyGame : Game
                 pause_menu.visible = true;
             }
 
-            if (levelBossIsActive == true)
+            if (Globals.levelBossIsActive == true)
             {
                 _levelBoss.Pause();
                 pauseMusic();
@@ -300,7 +331,7 @@ public class MyGame : Game
                 _level2.Unpause();
             }
 
-            if (levelBossIsActive == true)
+            if (Globals.levelBossIsActive == true)
             {
                 _levelBoss.Unpause();
             }
@@ -357,12 +388,12 @@ public class MyGame : Game
                         level2IsActive = false;
                     }
 
-                    if (levelBossIsActive == true)
+                    if (Globals.levelBossIsActive == true)
                     {
                         _levelBoss.Destroy();
                         _levelBoss.Remove();
 
-                        levelBossIsActive = false;
+                        Globals.levelBossIsActive = false;
                     }
 
                     CreateMenu();
@@ -416,7 +447,7 @@ public class MyGame : Game
     {
         _backgroundmusic = new Sound("Background_music_level1.mp3", true, true);
         _musicchannel = _backgroundmusic.Play();
-        _musicchannel.Volume = 0.5f;
+        _musicchannel.Volume = 0.2f;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

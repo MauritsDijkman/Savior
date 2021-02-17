@@ -3,9 +3,9 @@ using GXPEngine;								// GXPEngine contains the engine
 
 namespace GXPEngine
 {
-    class GameOver : GameObject
+    public class VictoryScreen : GameObject
     {
-        Sprite gameover;
+        Sprite victoryscreen;
 
         Button_Back _back_button;
         Button_Restart _restart_button;
@@ -16,10 +16,10 @@ namespace GXPEngine
         Sprite restart_button_normal;
         Sprite restart_button_hover;
 
-        public GameOver() : base()
+        public VictoryScreen() : base()
         {
-            gameover = new Sprite("GameOver.png");
-            AddChild(gameover);
+            victoryscreen = new Sprite("VictoryScreen.png");
+            AddChild(victoryscreen);
 
             _back_button = new Button_Back();
             AddChild(_back_button);
@@ -52,15 +52,11 @@ namespace GXPEngine
                 if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
                     GoBackToStartMenu();
-                    Globals.aIsPressed = false;
-                    Globals.dIsPressed = false;
                 }
 
                 if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
-                    RestartLevel();
-                    Globals.aIsPressed = false;
-                    Globals.dIsPressed = false;
+                    RestartGame();
                 }
             }
         }
@@ -98,19 +94,18 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void GoBackToStartMenu()
         {
-            DestroyGameOver();
+            DestroyVictoryScreen();
 
             MyGame mygame = game as MyGame;
             mygame.CreateMenu();
-
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        RestartLevel()
+        //                                                                                                                        RestartGame()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void RestartLevel()
+        void RestartGame()
         {
-            DestroyGameOver();
+            DestroyVictoryScreen();
 
             MyGame mygame = game as MyGame;
             mygame.CreateLevel1();
@@ -120,9 +115,9 @@ namespace GXPEngine
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        DestroyGameOver()
+        //                                                                                                                        DestroyVictoryScreen()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void DestroyGameOver()
+        void DestroyVictoryScreen()
         {
             LateDestroy();
             LateRemove();

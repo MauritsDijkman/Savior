@@ -3,16 +3,30 @@ using GXPEngine;
 
 namespace GXPEngine
 {
-    class Hitbox_Boss : Sprite
+    class Grenade : AnimationSprite
     {
-        bool BossDamagetake;
-        float Damagecounter;
+        float grenadeX;
+        float grenadeY;
 
-        public Hitbox_Boss() : base("hitbox_boss.png")
+        float maximalY;
+
+        float step;
+        float animationDrawsBetweenFrames;
+        float countFrames;
+
+
+        public Grenade(float grenadeX, float grenadeY, float maximalY) : base("grenade_tile.png", 10, 1)
         {
-            visible = false;
-
             Spawn();
+
+            x = grenadeX;
+            y = grenadeY;
+
+            this.maximalY = maximalY;
+
+            animationDrawsBetweenFrames = 5;
+
+            Globals.GrenadeDoesDamage = false;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,42 +35,56 @@ namespace GXPEngine
         void Spawn()
         {
             SetOrigin(width / 2, height / 2);
-            SetXY(-240, 590);
-
-            Globals.bossIsAttacking = false;
-            Globals.bossIsDead = false;
-            BossDamagetake = true;
+            SetXY(grenadeX, grenadeY);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        OnCollision()
+        //                                                                                                                        MoveGrenades()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        public void OnCollision(GameObject other)
+        public void MoveGrenades()
         {
-            if (BossDamagetake == false)
-            {
-                Damagecounter = Damagecounter + 1;
-            }
+            y = y + 15;
 
-            if (Damagecounter == 200)
+            if (y >= maximalY)
             {
-                BossDamagetake = true;
-                Damagecounter = 0;
-            }
-
-            if (other is Hitbox_Fist && Globals.bossIsAttacking == false && Globals.bossIsDead == false && Globals.playerIsAttacking == true && BossDamagetake == true)
-            {
-                Globals.health_boss = Globals.health_boss - 1;
-                BossDamagetake = false;
+                y = maximalY;
             }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleDeath()
+        //                                                                                                                        HandleExplosion()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HandleDeath()
+        void HandleExplosion()
         {
-            if (Globals.bossIsDead == true)
+            if (y == maximalY)
+            {
+                step = step + 1;
+
+                if (step > animationDrawsBetweenFrames)
+                {
+                    NextFrame();
+                    step = 0;
+                    countFrames = countFrames + 1;
+                }
+
+                if (countFrames >= 7)
+                {
+                    Globals.GrenadeDoesDamage = true;
+                }
+
+                if (countFrames >= 10)
+                {
+                    Globals.GrenadeDoesDamage = false;
+                }
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleRemove()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleRemove()
+        {
+            if (countFrames >= 10)
             {
                 LateDestroy();
                 LateRemove();
@@ -68,7 +96,11 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Update()
         {
-            HandleDeath();
+            MoveGrenades();
+
+            HandleExplosion();
+
+            HandleRemove();
         }
     }
 }

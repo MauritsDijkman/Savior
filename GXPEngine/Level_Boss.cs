@@ -24,14 +24,14 @@ namespace GXPEngine
             background = new LevelBoss_Background();
             AddChild(background);
 
+            _block_jump = new Block_Jump(360, 550);
+            AddChild(_block_jump);
+
             enemy_boss = new Enemy_Boss(1440, 0);
             AddChild(enemy_boss);
 
             player = new Player();
             AddChild(player);
-
-            _block_jump = new Block_Jump(360, 550);
-            AddChild(_block_jump);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -9,24 +9,37 @@ namespace GXPEngine
         Idle,
         AttackGrenade,
         AttackShotgun,
-        AttackSpawnEnemies
+        AttackSpawnEnemies,
+        Vulnerable
     }
 
     public class Enemy_Boss : AnimationSprite
     {
         BossState currentState = BossState.None;
 
+        Grenade _grenade;
+        Bullet _bullet;
+
         float stepIdle;
         float animationDrawsBetweenFramesIdle;
         float countFramesIdle;
 
+        float stepAG;
+        float animationDrawsBetweenFramesAG;
+        float countFramesAG;
+
+        float stepAS;
+        float animationDrawsBetweenFramesAS;
+        float countFramesAS;
+
         float bossX;
         float bossY;
 
-        Hitbox_Boss _hitbox_boss;
-        Hitbox_Player _hitbox_player;
+        bool granadesHaveSpawned;
 
-        public Enemy_Boss(float bossX, float bossY) : base("enemy_boss_tile.png", 7, 1)
+        Hitbox_Boss _hitbox_boss;
+
+        public Enemy_Boss(float bossX, float bossY) : base("enemy_boss_tile.png", 7, 3)
         {
             Spawn();
 
@@ -34,8 +47,10 @@ namespace GXPEngine
             y = bossY;
 
             animationDrawsBetweenFramesIdle = 10;
+            animationDrawsBetweenFramesAG = 10;
+            animationDrawsBetweenFramesAS = 10;
 
-            SetState(BossState.Idle);
+            SetState(BossState.AttackGrenade);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -74,6 +89,11 @@ namespace GXPEngine
             {
                 SetFrame(21);
             }
+
+            if (newState == BossState.Vulnerable)
+            {
+                SetFrame(21);
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,6 +116,10 @@ namespace GXPEngine
             if (currentState == BossState.AttackSpawnEnemies)
             {
                 HandleAttackSpawnEnemieState();
+            }
+            if (currentState == BossState.Vulnerable)
+            {
+                HandleVulnerableState();
             }
         }
 
@@ -125,7 +149,29 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackGrenadeState()
         {
+            if (granadesHaveSpawned == false)
+            {
+                HandleGrenades();
 
+                stepAG = stepAG + 1;
+
+                if (stepAG > animationDrawsBetweenFramesAG)
+                {
+                    NextFrame();
+                    stepAG = 0;
+                    countFramesAG = countFramesAG + 1;
+                }
+
+                if (countFramesAG >= 14)
+                {
+                    countFramesAG = 8;
+                }
+            }
+
+            if (granadesHaveSpawned == true)
+            {
+                SetState(BossState.Idle);
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -133,7 +179,21 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackShotgunState()
         {
+            HandleBullets();
 
+            stepAS = stepAS + 1;
+
+            if (stepAS > animationDrawsBetweenFramesAS)
+            {
+                NextFrame();
+                stepAS = 0;
+                countFramesAS = countFramesAS + 1;
+            }
+
+            if (countFramesAS >= 21)
+            {
+                countFramesAS = 15;
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,6 +202,50 @@ namespace GXPEngine
         void HandleAttackSpawnEnemieState()
         {
 
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleVulnerableState()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleVulnerableState()
+        {
+            if (currentState == BossState.Vulnerable)
+            {
+                Globals.bossIsAttacking = true;
+            }
+            else
+            {
+                Globals.bossIsAttacking = false;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleGrenades()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleGrenades()
+        {
+            if (countFramesAG == 8 && granadesHaveSpawned == false)
+            {
+                _grenade = new Grenade(-1075, -100, 490);
+                AddChild(_grenade);
+
+                _grenade = new Grenade(-800, -100, 700);
+                AddChild(_grenade);
+
+                _grenade = new Grenade(-1300, -100, 700);
+                AddChild(_grenade);
+
+                granadesHaveSpawned = true;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleBullets()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleBullets()
+        {
+            _bullet = new Bullet(-1075, 0, 0, 0);
+            AddChild(_bullet);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

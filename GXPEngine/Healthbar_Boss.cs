@@ -32,6 +32,9 @@ namespace GXPEngine
             {
                 Globals.bossIsDead = true;
 
+                MyGame mygame = game as MyGame;
+                mygame.CreateVictoryScreen();
+
                 if (Globals.bossDeathSoundHasPlayed == false)
                 {
                     _deathSound.Play();

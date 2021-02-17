@@ -273,7 +273,7 @@ namespace GXPEngine
                 x = Mathf.Clamp(x, 700, 13700);
             }
 
-            if (mygame.levelBossIsActive == true)
+            if (Globals.levelBossIsActive == true)
             {
                 x = Mathf.Clamp(x, (0 + width / 2), (1440 - width / 2));
             }

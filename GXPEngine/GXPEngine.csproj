@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Block_Jump.cs" />
     <Compile Include="Block_Jump2.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="Button_Back.cs" />
     <Compile Include="Button_Credits.cs" />
     <Compile Include="Button_Quit.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Enemy_Boss.cs" />
     <Compile Include="GameOver.cs" />
+    <Compile Include="Grenade.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Healthbar_Boss.cs" />
@@ -102,5 +104,6 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="VictoryScreen.cs" />
   </ItemGroup>
 </Project>
