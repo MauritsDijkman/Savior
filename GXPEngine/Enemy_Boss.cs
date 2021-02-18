@@ -62,6 +62,7 @@ namespace GXPEngine
             animationDrawsBetweenFramesV = 8;
 
             AllFrames = 0;
+
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -167,10 +168,8 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackGrenadeState()
         {
-            if (countFramesAG == 0 && currentState == BossState.AttackGrenade)
+            if (currentState == BossState.AttackGrenade)
             {
-                HandleGrenades();
-
                 stepAG = stepAG + 1;
 
                 if (stepAG > animationDrawsBetweenFramesAG)
@@ -178,6 +177,7 @@ namespace GXPEngine
                     NextFrame();
                     stepAG = 0;
 
+                    HandleGrenades();
                     countFramesAG = countFramesAG + 1;
 
                     AllFrames = AllFrames + 1;
@@ -185,7 +185,7 @@ namespace GXPEngine
 
                 if (countFramesAG == 7)
                 {
-                    countFramesAG = 0;
+                    //countFramesAG = 0;
                 }
             }
         }
@@ -195,10 +195,8 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackShotgunState()
         {
-            if (countFramesAS == 0 && currentState == BossState.AttackShotgun)
+            if (currentState == BossState.AttackShotgun)
             {
-                HandleBullets();
-
                 stepAS = stepAS + 1;
 
                 if (stepAS > animationDrawsBetweenFramesAS)
@@ -206,6 +204,7 @@ namespace GXPEngine
                     NextFrame();
                     stepAS = 0;
 
+                    HandleBullets();
                     countFramesAS = countFramesAS + 1;
 
                     AllFrames = AllFrames + 1;
@@ -213,7 +212,7 @@ namespace GXPEngine
 
                 if (countFramesAS == 7)
                 {
-                    countFramesAS = 0;
+                    //countFramesAS = 0;
                 }
             }
         }
@@ -223,10 +222,8 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackSpawnEnemieState()
         {
-            if (countFramesSP == 0 && currentState == BossState.AttackSpawnEnemies)
+            if (currentState == BossState.AttackSpawnEnemies)
             {
-                HandleSpawnEnemies();
-
                 stepSP = stepSP + 1;
 
                 if (stepSP > animationDrawsBetweenFramesSP)
@@ -234,6 +231,7 @@ namespace GXPEngine
                     NextFrame();
                     stepSP = 0;
 
+                    HandleSpawnEnemies();
                     countFramesSP = countFramesSP + 1;
 
                     AllFrames = AllFrames + 1;
@@ -241,7 +239,7 @@ namespace GXPEngine
 
                 if (countFramesSP == 7)
                 {
-                    countFramesSP = 0;
+                    //countFramesSP = 0;
                 }
             }
         }
@@ -251,10 +249,10 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleVulnerableState()
         {
-            if (countFramesV == 0 && currentState == BossState.Vulnerable)
+            if (currentState == BossState.Vulnerable)
             {
-                //_enemy.LateDestroy();
-                //_enemy.LateRemove();
+                _enemy.LateDestroy();
+                _enemy.LateRemove();
 
                 stepV = stepV + 1;
 
@@ -270,7 +268,7 @@ namespace GXPEngine
 
                 if (countFramesV == 14)
                 {
-                    countFramesV = 0;
+                    //countFramesV = 0;
                 }
             }
         }
@@ -280,7 +278,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleGrenades()
         {
-            if (countFramesAG == 7 && currentState == BossState.AttackGrenade)
+            if (countFramesAG == 6 && currentState == BossState.AttackGrenade)
             {
                 _grenade = new Grenade(-1075, -100, 490);
                 AddChild(_grenade);
@@ -298,7 +296,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleBullets()
         {
-            if (currentState == BossState.AttackShotgun && countFramesAS == 4)
+            if (countFramesAS == 4 && currentState == BossState.AttackShotgun)
             {
                 _bullet = new Bullet(-450, 650, -1460, 70);
                 AddChild(_bullet);
@@ -322,7 +320,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleSpawnEnemies()
         {
-            if (currentState == BossState.AttackSpawnEnemies && countFramesSP == 7)
+            if (countFramesSP == 6 && currentState == BossState.AttackSpawnEnemies)
             {
                 _enemy = new Enemy(-1075, 530, -1140, -1000);
                 AddChild(_enemy);
@@ -354,6 +352,7 @@ namespace GXPEngine
                 if (AllFrames == 0)
                 {
                     SetState(BossState.Idle);
+                    AllFrames = AllFrames + 1;
                 }
 
                 if (AllFrames == 7)
