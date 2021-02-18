@@ -71,7 +71,7 @@ namespace GXPEngine
             animationDrawsBetweenFramesSP = 10;
             animationDrawsBetweenFramesV = 10;
 
-            SetState(BossState.AttackGrenade);
+            SetState(BossState.AttackShotgun);
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -319,7 +319,10 @@ namespace GXPEngine
         {
             if (shootBullets == true)
             {
-                _bullet = new Bullet(-1075, 500, 0, 0);
+                _bullet = new Bullet(-800, 500, -1460, 10);
+                AddChild(_bullet);
+
+                _bullet = new Bullet(-800, 500, -1460, 500);
                 AddChild(_bullet);
 
                 shotgunHasAttacked = true;

@@ -11,6 +11,8 @@ namespace GXPEngine
         float GoToX;
         float GoToY;
 
+        float speed;
+
         public Bullet(float bulletX, float bulletY, float GoToX, float GoToY) : base("bullet_tile.png", 1, 1)
         {
             Spawn();
@@ -20,6 +22,8 @@ namespace GXPEngine
 
             this.GoToX = GoToX;
             this.GoToY = GoToY;
+
+            speed = 8f;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +40,16 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         public void MoveBullets()
         {
+            float deltaX = GoToX - x;
+            float deltaY = GoToY - y;
 
+            float distance = Mathf.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            if (distance > speed)
+            {
+                x += deltaX * speed / distance;
+                y += deltaY * speed / distance;
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -58,7 +71,7 @@ namespace GXPEngine
         {
             MoveBullets();
 
-            HandleRemove();
+            //HandleRemove();
         }
     }
 }
