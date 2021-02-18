@@ -45,15 +45,6 @@ namespace GXPEngine
 
         float AllFrames;
 
-        bool granadesHaveSpawned;
-        bool shotgunHasAttacked;
-        bool enemiesHasSpawned;
-        bool bossIsVulnerable;
-
-        bool shootGrenades;
-        bool shootBullets;
-        bool spawnEnemies;
-
         Hitbox_Boss _hitbox_boss;
         Enemy _enemy;
 
@@ -92,30 +83,31 @@ namespace GXPEngine
         {
             if (newState == BossState.Idle)
             {
+                countFramesIdle = 0;
                 SetFrame(0);
             }
 
             if (newState == BossState.AttackGrenade)
             {
-                granadesHaveSpawned = false;
+                countFramesAG = 0;
                 SetFrame(7);
             }
 
             if (newState == BossState.AttackShotgun)
             {
-                shotgunHasAttacked = false;
+                countFramesAS = 0;
                 SetFrame(14);
             }
 
             if (newState == BossState.AttackSpawnEnemies)
             {
-                enemiesHasSpawned = false;
+                countFramesSP = 0;
                 SetFrame(21);
             }
 
             if (newState == BossState.Vulnerable)
             {
-                bossIsVulnerable = true;
+                countFramesV = 0;
                 SetFrame(28);
             }
         }
@@ -158,6 +150,7 @@ namespace GXPEngine
             {
                 NextFrame();
                 stepIdle = 0;
+
                 countFramesIdle = countFramesIdle + 1;
 
                 AllFrames = AllFrames + 1;
@@ -174,8 +167,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackGrenadeState()
         {
-            if (granadesHaveSpawned == false)
-            //if (countFramesAG == 0 && currentState == BossState.AttackGrenade)
+            if (countFramesAG == 0 && currentState == BossState.AttackGrenade)
             {
                 HandleGrenades();
 
@@ -185,6 +177,7 @@ namespace GXPEngine
                 {
                     NextFrame();
                     stepAG = 0;
+
                     countFramesAG = countFramesAG + 1;
 
                     AllFrames = AllFrames + 1;
@@ -192,7 +185,6 @@ namespace GXPEngine
 
                 if (countFramesAG == 7)
                 {
-                    shootGrenades = true;
                     countFramesAG = 0;
                 }
             }
@@ -203,7 +195,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackShotgunState()
         {
-            if (shotgunHasAttacked == false)
+            if (countFramesAS == 0 && currentState == BossState.AttackShotgun)
             {
                 HandleBullets();
 
@@ -213,6 +205,7 @@ namespace GXPEngine
                 {
                     NextFrame();
                     stepAS = 0;
+
                     countFramesAS = countFramesAS + 1;
 
                     AllFrames = AllFrames + 1;
@@ -220,7 +213,6 @@ namespace GXPEngine
 
                 if (countFramesAS == 7)
                 {
-                    shootBullets = true;
                     countFramesAS = 0;
                 }
             }
@@ -231,7 +223,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttackSpawnEnemieState()
         {
-            if (enemiesHasSpawned == false)
+            if (countFramesSP == 0 && currentState == BossState.AttackSpawnEnemies)
             {
                 HandleSpawnEnemies();
 
@@ -241,6 +233,7 @@ namespace GXPEngine
                 {
                     NextFrame();
                     stepSP = 0;
+
                     countFramesSP = countFramesSP + 1;
 
                     AllFrames = AllFrames + 1;
@@ -248,7 +241,6 @@ namespace GXPEngine
 
                 if (countFramesSP == 7)
                 {
-                    spawnEnemies = true;
                     countFramesSP = 0;
                 }
             }
@@ -259,7 +251,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleVulnerableState()
         {
-            if (bossIsVulnerable == true)
+            if (countFramesV == 0 && currentState == BossState.Vulnerable)
             {
                 //_enemy.LateDestroy();
                 //_enemy.LateRemove();
@@ -270,6 +262,7 @@ namespace GXPEngine
                 {
                     NextFrame();
                     stepV = 0;
+
                     countFramesV = countFramesV + 1;
 
                     AllFrames = AllFrames + 1;
@@ -277,7 +270,6 @@ namespace GXPEngine
 
                 if (countFramesV == 14)
                 {
-                    bossIsVulnerable = false;
                     countFramesV = 0;
                 }
             }
@@ -288,8 +280,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleGrenades()
         {
-            if (shootGrenades == true)
-            //if (countFramesAG == 7 && currentState == BossState.AttackGrenade)
+            if (countFramesAG == 7 && currentState == BossState.AttackGrenade)
             {
                 _grenade = new Grenade(-1075, -100, 490);
                 AddChild(_grenade);
@@ -299,9 +290,6 @@ namespace GXPEngine
 
                 _grenade = new Grenade(-1300, -100, 790);
                 AddChild(_grenade);
-
-                granadesHaveSpawned = true;
-                shootGrenades = false;
             }
         }
 
@@ -310,7 +298,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleBullets()
         {
-            if (shootBullets == true)
+            if (currentState == BossState.AttackShotgun && countFramesAS == 4)
             {
                 _bullet = new Bullet(-450, 650, -1460, 70);
                 AddChild(_bullet);
@@ -326,9 +314,6 @@ namespace GXPEngine
 
                 _bullet = new Bullet(-450, 650, -1460, 1150);
                 AddChild(_bullet);
-
-                shotgunHasAttacked = true;
-                shootBullets = false;
             }
         }
 
@@ -337,13 +322,10 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleSpawnEnemies()
         {
-            if (spawnEnemies == true)
+            if (currentState == BossState.AttackSpawnEnemies && countFramesSP == 7)
             {
                 _enemy = new Enemy(-1075, 530, -1140, -1000);
                 AddChild(_enemy);
-
-                enemiesHasSpawned = true;
-                spawnEnemies = false;
             }
         }
 
@@ -352,39 +334,13 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void ChechIfBossIsVulnerable()
         {
-            if (currentState == BossState.Vulnerable)
+            if (currentState == BossState.Vulnerable && countFramesV >= 7)
             {
                 Globals.bossIsAttacking = false;
             }
             else
             {
                 Globals.bossIsAttacking = true;
-            }
-        }
-
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        Spawn()
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void Spawn()
-        {
-            SetFrame(0);
-
-            SetXY(bossX, bossY);
-            SetOrigin(width, 0);
-
-            _hitbox_boss = new Hitbox_Boss();
-            AddChild(_hitbox_boss);
-        }
-
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleDeath()
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HandleDeath()
-        {
-            if (Globals.bossIsDead == true)
-            {
-                LateDestroy();
-                LateRemove();
             }
         }
 
@@ -439,6 +395,32 @@ namespace GXPEngine
                 {
                     AllFrames = 0;
                 }
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        Spawn()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void Spawn()
+        {
+            SetFrame(0);
+
+            SetXY(bossX, bossY);
+            SetOrigin(width, 0);
+
+            _hitbox_boss = new Hitbox_Boss();
+            AddChild(_hitbox_boss);
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleDeath()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleDeath()
+        {
+            if (Globals.bossIsDead == true)
+            {
+                LateDestroy();
+                LateRemove();
             }
         }
 
