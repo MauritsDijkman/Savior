@@ -212,7 +212,11 @@ namespace GXPEngine
                 LateDestroy();
                 LateRemove();
 
+
                 isHit = false;
+
+
+                Globals.EnemyIsDead = false;
 
                 Globals.playerScore = Globals.playerScore + 10;
             }

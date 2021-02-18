@@ -31,11 +31,11 @@ namespace GXPEngine
         Hitbox_Player _hitbox_player;
         Hitbox_Fist _hitbox_fist;
 
-        Sound _attackSound;
+        Sound _attackSound;       
 
         public Player() : base("player_tile.png", 8, 1)
         {
-            _attackSound = new Sound("Attack_sound_player.wav", false, false);
+            _attackSound = new Sound("Attack_sound_player.wav", false, false);            
 
             Globals.MCfacingRight = true;
             Globals.MCfacingLeft = false;
@@ -138,7 +138,7 @@ namespace GXPEngine
 
             if (Input.GetKey(Key.SPACE))
             {
-                _attackSound.Play();
+                _attackSound.Play();                
                 SetState(PlayerState.Attack);
                 Globals.aIsPressed = false;
                 Globals.dIsPressed = false;

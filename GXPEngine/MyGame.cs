@@ -463,7 +463,7 @@ public class MyGame : Game
         Globals.bossIsAttacking = false;
         Globals.EnemyIsDead = false;
         Globals.aIsPressed = false;
-        Globals.dIsPressed = false;
+        Globals.dIsPressed = false;                
 
         Globals.countFramesAttackEnemy = 0;
         Globals.countFramesAttackPlayer = 0;
