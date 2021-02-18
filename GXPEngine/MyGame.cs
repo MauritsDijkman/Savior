@@ -448,6 +448,10 @@ public class MyGame : Game
     public void ResetWholeGame()
     {
         game.GetChildren().ForEach(ResetGame);
+
+        //Reset hier alle Globals. booleans.
+
+        //Globals.bossDeathSoundHasPlayed = false;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
