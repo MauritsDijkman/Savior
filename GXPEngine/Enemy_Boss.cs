@@ -43,6 +43,8 @@ namespace GXPEngine
         float bossX;
         float bossY;
 
+        float AllFrames;
+
         bool granadesHaveSpawned;
         bool shotgunHasAttacked;
         bool enemiesHasSpawned;
@@ -68,7 +70,7 @@ namespace GXPEngine
             animationDrawsBetweenFramesSP = 10;
             animationDrawsBetweenFramesV = 8;
 
-            SetState(BossState.AttackShotgun);
+            AllFrames = 0;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,11 +159,12 @@ namespace GXPEngine
                 NextFrame();
                 stepIdle = 0;
                 countFramesIdle = countFramesIdle + 1;
+
+                AllFrames = AllFrames + 1;
             }
 
             if (countFramesIdle == 7)
             {
-                SetFrame(0);
                 countFramesIdle = 0;
             }
         }
@@ -172,6 +175,7 @@ namespace GXPEngine
         void HandleAttackGrenadeState()
         {
             if (granadesHaveSpawned == false)
+            //if (countFramesAG == 0 && currentState == BossState.AttackGrenade)
             {
                 HandleGrenades();
 
@@ -182,6 +186,8 @@ namespace GXPEngine
                     NextFrame();
                     stepAG = 0;
                     countFramesAG = countFramesAG + 1;
+
+                    AllFrames = AllFrames + 1;
                 }
 
                 if (countFramesAG == 7)
@@ -189,11 +195,6 @@ namespace GXPEngine
                     shootGrenades = true;
                     countFramesAG = 0;
                 }
-            }
-
-            if (granadesHaveSpawned == true)
-            {
-                SetState(BossState.Idle);
             }
         }
 
@@ -213,6 +214,8 @@ namespace GXPEngine
                     NextFrame();
                     stepAS = 0;
                     countFramesAS = countFramesAS + 1;
+
+                    AllFrames = AllFrames + 1;
                 }
 
                 if (countFramesAS == 7)
@@ -220,11 +223,6 @@ namespace GXPEngine
                     shootBullets = true;
                     countFramesAS = 0;
                 }
-            }
-
-            if (shotgunHasAttacked == true)
-            {
-                SetState(BossState.Idle);
             }
         }
 
@@ -244,6 +242,8 @@ namespace GXPEngine
                     NextFrame();
                     stepSP = 0;
                     countFramesSP = countFramesSP + 1;
+
+                    AllFrames = AllFrames + 1;
                 }
 
                 if (countFramesSP == 7)
@@ -251,11 +251,6 @@ namespace GXPEngine
                     spawnEnemies = true;
                     countFramesSP = 0;
                 }
-            }
-
-            if (enemiesHasSpawned == true)
-            {
-                SetState(BossState.Idle);
             }
         }
 
@@ -276,17 +271,14 @@ namespace GXPEngine
                     NextFrame();
                     stepV = 0;
                     countFramesV = countFramesV + 1;
+
+                    AllFrames = AllFrames + 1;
                 }
 
                 if (countFramesV == 14)
                 {
-                    countFramesV = 0;
                     bossIsVulnerable = false;
-                }
-
-                if (bossIsVulnerable == false)
-                {
-                    SetState(BossState.Idle);
+                    countFramesV = 0;
                 }
             }
         }
@@ -297,6 +289,7 @@ namespace GXPEngine
         void HandleGrenades()
         {
             if (shootGrenades == true)
+            //if (countFramesAG == 7 && currentState == BossState.AttackGrenade)
             {
                 _grenade = new Grenade(-1075, -100, 490);
                 AddChild(_grenade);
@@ -402,7 +395,50 @@ namespace GXPEngine
         {
             if (Globals.bossIsDead == false)
             {
+                if (AllFrames == 0)
+                {
+                    SetState(BossState.Idle);
+                }
 
+                if (AllFrames == 7)
+                {
+                    SetState(BossState.AttackGrenade);
+                }
+
+                if (AllFrames == 14)
+                {
+                    SetState(BossState.Idle);
+                }
+
+                if (AllFrames == 21)
+                {
+                    SetState(BossState.AttackShotgun);
+                }
+
+                if (AllFrames == 28)
+                {
+                    SetState(BossState.Idle);
+                }
+
+                if (AllFrames == 35)
+                {
+                    SetState(BossState.AttackSpawnEnemies);
+                }
+
+                if (AllFrames == 42)
+                {
+                    SetState(BossState.Idle);
+                }
+
+                if (AllFrames == 49)
+                {
+                    SetState(BossState.Vulnerable);
+                }
+
+                if (AllFrames == 63)
+                {
+                    AllFrames = 0;
+                }
             }
         }
 

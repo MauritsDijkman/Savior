@@ -27,7 +27,7 @@ public class HUD : Canvas
         _healthbar_boss = new Healthbar_Boss();
         AddChild(_healthbar_boss);
 
-        _healthbar_boss.x = 1020;
+        _healthbar_boss.x = 882;
         _healthbar_boss.y = 10;
     }
 

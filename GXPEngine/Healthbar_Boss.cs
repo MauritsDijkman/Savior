@@ -7,7 +7,7 @@ namespace GXPEngine
     {
         Sound _deathSound;
 
-        public Healthbar_Boss() : base("healthbar_tile.png", 6, 1)
+        public Healthbar_Boss() : base("healthbar_boss_tile.png", 21, 1)
         {
             Spawn();
 
@@ -19,7 +19,7 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void Spawn()
         {
-            Globals.health_boss = 5;
+            Globals.health_boss = 21;
             Globals.bossDeathSoundHasPlayed = false;
         }
 

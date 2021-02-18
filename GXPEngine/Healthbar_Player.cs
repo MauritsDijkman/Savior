@@ -7,7 +7,7 @@ namespace GXPEngine
     {
         Sound _deathSound;
 
-        public Healthbar_Player() : base("healthbar_tile.png", 6, 1)
+        public Healthbar_Player() : base("healthbar_player_tile.png", 6, 1)
         {
             Spawn();
 
