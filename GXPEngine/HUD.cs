@@ -67,7 +67,9 @@ public class HUD : Canvas
         Font font = LoadFontFile(@"Font_Pixeled.ttf", 15);
 
         graphics.Clear(Color.Empty);
-        graphics.DrawString("FPS: " + Globals.FPS_Game, font, Brushes.White, 10, 80);
+
+        graphics.DrawString("FPS: " + Globals.FPS_Game, font, Brushes.White, 10, 130);
+        graphics.DrawString("Score: " + Globals.playerScore, font, Brushes.White, 10, 80);
 
         ShowOrHideBossHealthbar();
     }

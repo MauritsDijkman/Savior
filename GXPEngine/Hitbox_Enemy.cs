@@ -41,7 +41,9 @@ namespace GXPEngine
                 LateDestroy();
                 LateRemove();
 
-                Globals.EnemyIsDead = true;
+                Enemy theEnemyParent = (Enemy)parent;
+
+                theEnemyParent.hit();
             }
         }
 

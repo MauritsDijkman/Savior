@@ -25,6 +25,8 @@ namespace GXPEngine
         bool goToLeft;
         bool goToRight;
 
+        Boolean isHit;
+
         float countFramesWalk;
 
         Hitbox_Enemy _hitbox_enemy;
@@ -55,6 +57,11 @@ namespace GXPEngine
             speed = 3;
 
             SetState(EnemyState.Walk);
+        }
+
+        public void hit()
+        {
+            isHit = true;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -198,14 +205,16 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleDeath()
         {
-            if (Globals.EnemyIsDead == true)
+            if (isHit)
             {
                 _deadSound.Play();
 
                 LateDestroy();
                 LateRemove();
 
-                Globals.EnemyIsDead = false;
+                isHit = false;
+
+                Globals.playerScore = Globals.playerScore + 10;
             }
         }
 

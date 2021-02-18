@@ -8,6 +8,7 @@ static class Globals
     public static float countFramesAttackPlayer;
     public static float countFramesAttackEnemy;
     public static float FPS_Game;
+    public static float playerScore;
     public static bool aIsPressed;
     public static bool dIsPressed;
     public static bool EnemyIsDead;
@@ -449,9 +450,26 @@ public class MyGame : Game
     {
         game.GetChildren().ForEach(ResetGame);
 
-        //Reset hier alle Globals. booleans.
+        Globals.GrenadeDoesDamage = false;
+        Globals.levelBossIsActive = false;
+        Globals.bossDeathSoundHasPlayed = false;
+        Globals.showMouseCursor = false;
+        Globals.MCfacingLeft = false;
+        Globals.MCfacingRight = true;
+        Globals.bossIsDead = false;
+        Globals.playerIsDead = false;
+        Globals.playerIsAttacking = false;
+        Globals.enemyIsAttacking = false;
+        Globals.bossIsAttacking = false;
+        Globals.EnemyIsDead = false;
+        Globals.aIsPressed = false;
+        Globals.dIsPressed = false;
 
-        //Globals.bossDeathSoundHasPlayed = false;
+        Globals.countFramesAttackEnemy = 0;
+        Globals.countFramesAttackPlayer = 0;
+        Globals.playerScore = 0;
+        Globals.health_boss = 5;
+        Globals.health_player = 5;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
