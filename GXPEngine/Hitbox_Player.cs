@@ -13,6 +13,11 @@ namespace GXPEngine
         bool MCDamagetakeGrenade;
         float DamagecounterGrenade;
 
+        bool MCDamagetakeBullet;
+        float DamagecounterBullet;
+
+        bool bulletDidDamage;
+
         public Hitbox_Player() : base("hitbox_player.png")
         {
             _damageSound = new Sound("damage_sound_player.wav", false, false);
@@ -20,6 +25,7 @@ namespace GXPEngine
             visible = false;
 
             MCDamagetakeGrenade = true;
+            bulletDidDamage = false;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -81,10 +87,11 @@ namespace GXPEngine
                 MCDamagetakeGrenade = false;
             }
 
-            if (other is Bullet)
+            if (other is Bullet && bulletDidDamage == false)
             {
                 Globals.health_player = Globals.health_player - 1;
                 _damageSound.Play();
+                bulletDidDamage = true;
             }
         }
 

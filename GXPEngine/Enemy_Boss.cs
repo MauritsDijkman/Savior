@@ -43,8 +43,6 @@ namespace GXPEngine
         float bossX;
         float bossY;
 
-        float Vulberablecounter;
-
         bool granadesHaveSpawned;
         bool shotgunHasAttacked;
         bool enemiesHasSpawned;
@@ -53,12 +51,11 @@ namespace GXPEngine
         bool shootGrenades;
         bool shootBullets;
         bool spawnEnemies;
-        bool makeBossVulnerable;
 
         Hitbox_Boss _hitbox_boss;
         Enemy _enemy;
 
-        public Enemy_Boss(float bossX, float bossY) : base("enemy_boss_tile.png", 7, 4)
+        public Enemy_Boss(float bossX, float bossY) : base("enemy_boss_tile.png", 7, 6)
         {
             Spawn();
 
@@ -69,7 +66,7 @@ namespace GXPEngine
             animationDrawsBetweenFramesAG = 10;
             animationDrawsBetweenFramesAS = 10;
             animationDrawsBetweenFramesSP = 10;
-            animationDrawsBetweenFramesV = 10;
+            animationDrawsBetweenFramesV = 8;
 
             SetState(BossState.AttackShotgun);
         }
@@ -116,8 +113,8 @@ namespace GXPEngine
 
             if (newState == BossState.Vulnerable)
             {
-                //bossIsVulnerable = true;
-                //SetFrame(28);
+                bossIsVulnerable = true;
+                SetFrame(28);
             }
         }
 
@@ -269,10 +266,8 @@ namespace GXPEngine
         {
             if (bossIsVulnerable == true)
             {
-                _enemy.LateDestroy();
-                _enemy.LateRemove();
-
-                HandleBossVulnerable();
+                //_enemy.LateDestroy();
+                //_enemy.LateRemove();
 
                 stepV = stepV + 1;
 
@@ -283,10 +278,15 @@ namespace GXPEngine
                     countFramesV = countFramesV + 1;
                 }
 
-                if (countFramesV == 7)
+                if (countFramesV == 14)
                 {
-                    makeBossVulnerable = true;
                     countFramesV = 0;
+                    bossIsVulnerable = false;
+                }
+
+                if (bossIsVulnerable == false)
+                {
+                    SetState(BossState.Idle);
                 }
             }
         }
@@ -319,10 +319,19 @@ namespace GXPEngine
         {
             if (shootBullets == true)
             {
-                _bullet = new Bullet(-800, 500, -1460, 10);
+                _bullet = new Bullet(-450, 650, -1460, 70);
                 AddChild(_bullet);
 
-                _bullet = new Bullet(-800, 500, -1460, 500);
+                _bullet = new Bullet(-450, 650, -1460, 390);
+                AddChild(_bullet);
+
+                _bullet = new Bullet(-450, 650, -1460, 610);
+                AddChild(_bullet);
+
+                _bullet = new Bullet(-450, 650, -1460, 900);
+                AddChild(_bullet);
+
+                _bullet = new Bullet(-450, 650, -1460, 1150);
                 AddChild(_bullet);
 
                 shotgunHasAttacked = true;
@@ -342,28 +351,6 @@ namespace GXPEngine
 
                 enemiesHasSpawned = true;
                 spawnEnemies = false;
-            }
-        }
-
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        HandleBossVulnerable()
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void HandleBossVulnerable()
-        {
-            if (makeBossVulnerable == true)
-            {
-                if (bossIsVulnerable == true)
-                {
-                    Vulberablecounter = Vulberablecounter + 1;
-                }
-
-                if (Vulberablecounter == 800)
-                {
-                    bossIsVulnerable = false;
-                    Vulberablecounter = 0;
-
-                    makeBossVulnerable = false;
-                }
             }
         }
 
@@ -413,7 +400,10 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleAttacks()
         {
+            if (Globals.bossIsDead == false)
+            {
 
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
