@@ -46,7 +46,10 @@ namespace GXPEngine
         float AllFrames;
 
         Hitbox_Boss _hitbox_boss;
-        Enemy _enemy;
+
+        Enemy _enemy1;
+        Enemy _enemy2;
+        Enemy _enemy3;
 
         public Enemy_Boss(float bossX, float bossY) : base("enemy_boss_tile.png", 7, 6)
         {
@@ -182,11 +185,6 @@ namespace GXPEngine
 
                     AllFrames = AllFrames + 1;
                 }
-
-                if (countFramesAG == 7)
-                {
-                    //countFramesAG = 0;
-                }
             }
         }
 
@@ -208,11 +206,6 @@ namespace GXPEngine
                     countFramesAS = countFramesAS + 1;
 
                     AllFrames = AllFrames + 1;
-                }
-
-                if (countFramesAS == 7)
-                {
-                    //countFramesAS = 0;
                 }
             }
         }
@@ -236,11 +229,6 @@ namespace GXPEngine
 
                     AllFrames = AllFrames + 1;
                 }
-
-                if (countFramesSP == 7)
-                {
-                    //countFramesSP = 0;
-                }
             }
         }
 
@@ -251,8 +239,14 @@ namespace GXPEngine
         {
             if (currentState == BossState.Vulnerable)
             {
-                _enemy.LateDestroy();
-                _enemy.LateRemove();
+                _enemy1.LateDestroy();
+                _enemy1.LateRemove();
+
+                _enemy2.LateDestroy();
+                _enemy2.LateRemove();
+
+                _enemy3.LateDestroy();
+                _enemy3.LateRemove();
 
                 stepV = stepV + 1;
 
@@ -264,11 +258,6 @@ namespace GXPEngine
                     countFramesV = countFramesV + 1;
 
                     AllFrames = AllFrames + 1;
-                }
-
-                if (countFramesV == 14)
-                {
-                    //countFramesV = 0;
                 }
             }
         }
@@ -322,8 +311,14 @@ namespace GXPEngine
         {
             if (countFramesSP == 6 && currentState == BossState.AttackSpawnEnemies)
             {
-                _enemy = new Enemy(-1075, 530, -1140, -1000);
-                AddChild(_enemy);
+                _enemy1 = new Enemy(-1075, 530, -1140, -1000);
+                AddChild(_enemy1);
+
+                _enemy2 = new Enemy(-1375, 830, -1440, -900);
+                AddChild(_enemy2);
+
+                _enemy3 = new Enemy(-200, 830, -900, -200);
+                AddChild(_enemy3);
             }
         }
 

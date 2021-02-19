@@ -17,6 +17,7 @@ namespace GXPEngine
         float DamagecounterBullet;
 
         bool bulletDidDamage;
+        float timer;
 
         public Hitbox_Player() : base("hitbox_player.png")
         {
@@ -85,6 +86,17 @@ namespace GXPEngine
                 Globals.health_player = Globals.health_player - 2;
                 _damageSound.Play();
                 MCDamagetakeGrenade = false;
+            }
+
+            if (bulletDidDamage == true)
+            {
+                timer = timer + 1;
+            }
+
+            if (timer == 60)
+            {
+                bulletDidDamage = false;
+                timer = 0;
             }
 
             if (other is Bullet && bulletDidDamage == false)
