@@ -7,37 +7,58 @@ namespace GXPEngine
     {
         Sprite victoryscreen;
 
-        Button_Back _back_button;
-        Button_Restart _restart_button;
-
-        Sprite back_main_button_normal;
-        Sprite back_main_button_hover;
+        Button_Start _restart_button;
+        Button_Credits _credits_button;
+        Button_Quit _main_menu_button;
 
         Sprite restart_button_normal;
         Sprite restart_button_hover;
 
+        Sprite credits_button_normal;
+        Sprite credits_button_hover;
+
+        Sprite main_menu_button_normal;
+        Sprite main_menu_button_hover;
+
+        bool restarthoversoundHasPlayed = false;
+        bool creditshoversoundHasPlayed = false;
+        bool mainmenuhoversoundHasPlayed = false;
+
+        Sound _hover;
+
         public VictoryScreen() : base()
         {
+            _hover = new Sound("hover.wav", false, false);
+
             victoryscreen = new Sprite("VictoryScreen.png");
             AddChild(victoryscreen);
 
-            _back_button = new Button_Back();
-            AddChild(_back_button);
-
-            _restart_button = new Button_Restart();
+            _restart_button = new Button_Start();
             AddChild(_restart_button);
 
-            back_main_button_normal = new Sprite("back_main_button_normal.png");
-            AddChild(back_main_button_normal);
+            _credits_button = new Button_Credits();
+            AddChild(_credits_button);
 
-            back_main_button_hover = new Sprite("back_main_button_hover.png");
-            AddChild(back_main_button_hover);
+            _main_menu_button = new Button_Quit();
+            AddChild(_main_menu_button);
 
-            restart_button_normal = new Sprite("restart_button_normal.png");
+            restart_button_normal = new Sprite("restart2_button_normal.png");
             AddChild(restart_button_normal);
 
-            restart_button_hover = new Sprite("restart_button_hover.png");
+            restart_button_hover = new Sprite("restart2_button_hover.png");
             AddChild(restart_button_hover);
+
+            credits_button_normal = new Sprite("credits_button_normal.png");
+            AddChild(credits_button_normal);
+
+            credits_button_hover = new Sprite("credits_button_hover.png");
+            AddChild(credits_button_hover);
+
+            main_menu_button_normal = new Sprite("main_menu_button_normal.png");
+            AddChild(main_menu_button_normal);
+
+            main_menu_button_hover = new Sprite("main_menu_button_hover.png");
+            AddChild(main_menu_button_hover);
 
             Globals.showMouseCursor = true;
         }
@@ -49,14 +70,19 @@ namespace GXPEngine
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
-                {
-                    GoBackToStartMenu();
-                }
-
                 if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
                     RestartGame();
+                }
+
+                if (_credits_button.HitTestPoint(Input.mouseX, Input.mouseY))
+                {
+                    CreateCreditsMenu();
+                }
+
+                if (_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY))
+                {
+                    GoBackToStartMenu();
                 }
             }
         }
@@ -66,17 +92,6 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleHoverButton()
         {
-            if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
-            {
-                back_main_button_normal.visible = false;
-                back_main_button_hover.visible = true;
-            }
-            else
-            {
-                back_main_button_normal.visible = true;
-                back_main_button_hover.visible = false;
-            }
-
             if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
             {
                 restart_button_normal.visible = false;
@@ -87,18 +102,64 @@ namespace GXPEngine
                 restart_button_normal.visible = true;
                 restart_button_hover.visible = false;
             }
+
+            if (_credits_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                credits_button_normal.visible = false;
+                credits_button_hover.visible = true;
+            }
+            else
+            {
+                credits_button_normal.visible = true;
+                credits_button_hover.visible = false;
+            }
+
+            if (_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                main_menu_button_normal.visible = false;
+                main_menu_button_hover.visible = true;
+            }
+            else
+            {
+                main_menu_button_normal.visible = true;
+                main_menu_button_hover.visible = false;
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //                                                                                                                        GoBackToStartMenu()
+        //                                                                                                                        HandleHoverSound()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void GoBackToStartMenu()
+        void HandleHoverSound()
         {
-            DestroyVictoryScreen();
+            if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY) && restarthoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                restarthoversoundHasPlayed = true;
+            }
+            else if (!_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                restarthoversoundHasPlayed = false;
+            }
 
-            MyGame mygame = game as MyGame;
-            mygame.ResetWholeGame();
-            mygame.CreateMenu();
+            if (_credits_button.HitTestPoint(Input.mouseX, Input.mouseY) && creditshoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                creditshoversoundHasPlayed = true;
+            }
+            else if (!_credits_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                creditshoversoundHasPlayed = false;
+            }
+
+            if (_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY) && mainmenuhoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                mainmenuhoversoundHasPlayed = true;
+            }
+            else if (!_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                mainmenuhoversoundHasPlayed = false;
+            }
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,6 +178,30 @@ namespace GXPEngine
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        CreateCreditsMenu()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void CreateCreditsMenu()
+        {
+            DestroyVictoryScreen();
+
+            MyGame mygame = game as MyGame;
+            mygame.ResetWholeGame();
+            mygame.CreateCreditsMenu();
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        GoBackToStartMenu()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void GoBackToStartMenu()
+        {
+            DestroyVictoryScreen();
+
+            MyGame mygame = game as MyGame;
+            mygame.ResetWholeGame();
+            mygame.CreateMenu();
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //                                                                                                                        DestroyVictoryScreen()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void DestroyVictoryScreen()
@@ -132,6 +217,7 @@ namespace GXPEngine
         {
             HandleClickButton();
             HandleHoverButton();
+            HandleHoverSound();
         }
     }
 }

@@ -13,9 +13,6 @@ namespace GXPEngine
         bool MCDamagetakeGrenade;
         float DamagecounterGrenade;
 
-        bool MCDamagetakeBullet;
-        float DamagecounterBullet;
-
         bool bulletDidDamage;
         float timer;
 

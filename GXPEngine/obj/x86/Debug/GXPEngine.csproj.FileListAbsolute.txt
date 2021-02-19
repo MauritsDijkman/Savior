@@ -22,4 +22,3 @@ C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\bin\Debug\GXP
 C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.exe
 C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.pdb
-C:\Users\mauri\OneDrive\Bureaublad\CMGT\Term 3\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csprojAssemblyReference.cache

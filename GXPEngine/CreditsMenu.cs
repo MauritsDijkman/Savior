@@ -12,19 +12,27 @@ namespace GXPEngine
         Sprite back_button_normal;
         Sprite back_button_hover;
 
+        bool backhoversoundHasPlayed = false;
+
+        Sound _hover;
+
         public CreditsMenu() : base()
         {
-            creditsmenu = new Sprite("ControlsMenu.png");
+            _hover = new Sound("hover.wav", false, false);
+
+            creditsmenu = new Sprite("CreditsMenu.png");
             AddChild(creditsmenu);
 
             _back_button = new Button_Back();
             AddChild(_back_button);
 
-            back_button_normal = new Sprite("back_main_button_normal.png");
+            back_button_normal = new Sprite("back_button_normal.png");
             AddChild(back_button_normal);
 
-            back_button_hover = new Sprite("back_main_button_hover.png");
+            back_button_hover = new Sprite("back_button_hover.png");
             AddChild(back_button_hover);
+
+            Globals.showMouseCursor = true;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +44,7 @@ namespace GXPEngine
             {
                 if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
-                    GoBackToStartMenu();
+                    GoBackToVictoryMenu();
                 }
             }
         }
@@ -59,15 +67,30 @@ namespace GXPEngine
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleHoverSound()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleHoverSound()
+        {
+            if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY) && backhoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                backhoversoundHasPlayed = true;
+            }
+            else if (!_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                backhoversoundHasPlayed = false;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //                                                                                                                        GoBackToStartMenu()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        void GoBackToStartMenu()
+        void GoBackToVictoryMenu()
         {
             DestroyCreditsMenu();
 
             MyGame mygame = game as MyGame;
-            mygame.CreateMenu();
-
+            mygame.CreateVictoryScreen();
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -86,6 +109,7 @@ namespace GXPEngine
         {
             HandleClickButton();
             HandleHoverButton();
+            HandleHoverSound();
         }
     }
 }

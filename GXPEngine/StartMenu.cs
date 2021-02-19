@@ -14,14 +14,27 @@ namespace GXPEngine
         Sprite start_button_normal;
         Sprite start_button_hover;
 
-        Sprite credits_button_normal;
-        Sprite credits_button_hover;
+        Sprite controls_button_normal;
+        Sprite controls_button_hover;
 
         Sprite quit_button_normal;
         Sprite quit_button_hover;
 
+        Sound _music;
+        SoundChannel _musicChannel;
+
+        bool starthoversoundHasPlayed = false;
+        bool creditshoversoundHasPlayed = false;
+        bool quithoversoundHasPlayed = false;
+
+        Sound _hover;
+
         public StartMenu() : base()
         {
+            _hover = new Sound("hover.wav", false, false);
+
+            startMusic();
+
             startmenu = new Sprite("StartMenu.png");
             AddChild(startmenu);
 
@@ -40,11 +53,11 @@ namespace GXPEngine
             start_button_hover = new Sprite("start_button_hover.png");
             AddChild(start_button_hover);
 
-            credits_button_normal = new Sprite("controls_button_normal.png");
-            AddChild(credits_button_normal);
+            controls_button_normal = new Sprite("controls_button_normal.png");
+            AddChild(controls_button_normal);
 
-            credits_button_hover = new Sprite("controls_button_hover.png");
-            AddChild(credits_button_hover);
+            controls_button_hover = new Sprite("controls_button_hover.png");
+            AddChild(controls_button_hover);
 
             quit_button_normal = new Sprite("exit_button_normal.png");
             AddChild(quit_button_normal);
@@ -100,13 +113,13 @@ namespace GXPEngine
 
             if (_credits_button.HitTestPoint(Input.mouseX, Input.mouseY))
             {
-                credits_button_normal.visible = false;
-                credits_button_hover.visible = true;
+                controls_button_normal.visible = false;
+                controls_button_hover.visible = true;
             }
             else
             {
-                credits_button_normal.visible = true;
-                credits_button_hover.visible = false;
+                controls_button_normal.visible = true;
+                controls_button_hover.visible = false;
             }
 
             if (_quit_button.HitTestPoint(Input.mouseX, Input.mouseY))
@@ -122,6 +135,42 @@ namespace GXPEngine
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleHoverSound()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleHoverSound()
+        {
+            if (_start_button.HitTestPoint(Input.mouseX, Input.mouseY) && starthoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                starthoversoundHasPlayed = true;
+            }
+            else if (!_start_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                starthoversoundHasPlayed = false;
+            }
+
+            if (_credits_button.HitTestPoint(Input.mouseX, Input.mouseY) && creditshoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                creditshoversoundHasPlayed = true;
+            }
+            else if (!_credits_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                creditshoversoundHasPlayed = false;
+            }
+
+            if (_quit_button.HitTestPoint(Input.mouseX, Input.mouseY) && quithoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                quithoversoundHasPlayed = true;
+            }
+            else if (!_quit_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                quithoversoundHasPlayed = false;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //                                                                                                                        CreateGame()
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void CreateGame()
@@ -129,7 +178,7 @@ namespace GXPEngine
             DestroyStartMenu();
 
             MyGame mygame = game as MyGame;
-            mygame.CreateBossLevel();
+            mygame.CreateLevel1();
             mygame.startMusic();
         }
 
@@ -141,7 +190,7 @@ namespace GXPEngine
             DestroyStartMenu();
 
             MyGame mygame = game as MyGame;
-            mygame.CreateCreditsMenu();
+            mygame.CreateControlsMenu();
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -149,8 +198,28 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void DestroyStartMenu()
         {
+            stopMusic();
+
             LateDestroy();
             LateRemove();
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        startMusic()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void startMusic()
+        {
+            _music = new Sound("background_music_main_menu.mp3", true, true);
+            _musicChannel = _music.Play();
+            _musicChannel.Volume = 0.2f;
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        stopMusic()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void stopMusic()
+        {
+            _musicChannel.Stop();
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -160,6 +229,7 @@ namespace GXPEngine
         {
             HandleClickButton();
             HandleHoverButton();
+            HandleHoverSound();
         }
     }
 }

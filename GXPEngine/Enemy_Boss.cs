@@ -65,7 +65,6 @@ namespace GXPEngine
             animationDrawsBetweenFramesV = 8;
 
             AllFrames = 0;
-
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,21 +147,24 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleIdleState()
         {
-            stepIdle = stepIdle + 1;
-
-            if (stepIdle > animationDrawsBetweenFramesIdle)
+            if (currentState == BossState.Idle)
             {
-                NextFrame();
-                stepIdle = 0;
+                stepIdle = stepIdle + 1;
 
-                countFramesIdle = countFramesIdle + 1;
+                if (stepIdle > animationDrawsBetweenFramesIdle)
+                {
+                    NextFrame();
+                    stepIdle = 0;
 
-                AllFrames = AllFrames + 1;
-            }
+                    countFramesIdle = countFramesIdle + 1;
 
-            if (countFramesIdle == 7)
-            {
-                countFramesIdle = 0;
+                    AllFrames = AllFrames + 1;
+                }
+
+                if (countFramesIdle == 7)
+                {
+                    countFramesIdle = 0;
+                }
             }
         }
 
@@ -425,6 +427,7 @@ namespace GXPEngine
         {
             HandleState();
             HandleDeath();
+
             ChechIfBossIsVulnerable();
 
             HandleAttacks();

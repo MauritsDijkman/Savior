@@ -30,9 +30,10 @@ static class Globals
 public class MyGame : Game
 {
     private StartMenu _menu;
-    private CreditsMenu _creditsmenu;
+    private ControlsMenu _controlsmenu;
     private GameOver _gameover;
     private VictoryScreen _victoryscreen;
+    private CreditsMenu _creditsmenu;
     private Level1 _level1;
     private Level2 _level2;
     private Level_Boss _levelBoss;
@@ -125,6 +126,15 @@ public class MyGame : Game
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                                                                                        CreateControlsMenu()
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void CreateControlsMenu()
+    {
+        _controlsmenu = new ControlsMenu();
+        AddChild(_controlsmenu);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                                                                        CreateCreditsMenu()
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void CreateCreditsMenu()
@@ -155,6 +165,8 @@ public class MyGame : Game
 
         Globals.playerIsDead = false;
         Globals.showMouseCursor = false;
+
+        Globals.health_player = 5;
 
         level1IsActive = true;
         level2IsActive = false;
@@ -460,10 +472,9 @@ public class MyGame : Game
         Globals.playerIsDead = false;
         Globals.playerIsAttacking = false;
         Globals.enemyIsAttacking = false;
-        Globals.bossIsAttacking = false;
         Globals.EnemyIsDead = false;
         Globals.aIsPressed = false;
-        Globals.dIsPressed = false;                
+        Globals.dIsPressed = false;
 
         Globals.countFramesAttackEnemy = 0;
         Globals.countFramesAttackPlayer = 0;

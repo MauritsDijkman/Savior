@@ -7,7 +7,7 @@ namespace GXPEngine
     {
         Sprite gameover;
 
-        Button_Back _back_button;
+        Button_Back _main_menu_button;
         Button_Restart _restart_button;
 
         Sprite back_main_button_normal;
@@ -16,13 +16,20 @@ namespace GXPEngine
         Sprite restart_button_normal;
         Sprite restart_button_hover;
 
+        bool restarthoversoundHasPlayed = false;
+        bool mainmenuhoversoundHasPlayed = false;
+
+        Sound _hover;
+
         public GameOver() : base()
         {
+            _hover = new Sound("hover.wav", false, false);
+
             gameover = new Sprite("GameOver.png");
             AddChild(gameover);
 
-            _back_button = new Button_Back();
-            AddChild(_back_button);
+            _main_menu_button = new Button_Back();
+            AddChild(_main_menu_button);
 
             _restart_button = new Button_Restart();
             AddChild(_restart_button);
@@ -49,16 +56,16 @@ namespace GXPEngine
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
+                if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
-                    GoBackToStartMenu();
+                    RestartLevel();
                     Globals.aIsPressed = false;
                     Globals.dIsPressed = false;
                 }
 
-                if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
+                if (_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
-                    RestartLevel();
+                    GoBackToStartMenu();
                     Globals.aIsPressed = false;
                     Globals.dIsPressed = false;
                 }
@@ -70,17 +77,6 @@ namespace GXPEngine
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         void HandleHoverButton()
         {
-            if (_back_button.HitTestPoint(Input.mouseX, Input.mouseY))
-            {
-                back_main_button_normal.visible = false;
-                back_main_button_hover.visible = true;
-            }
-            else
-            {
-                back_main_button_normal.visible = true;
-                back_main_button_hover.visible = false;
-            }
-
             if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
             {
                 restart_button_normal.visible = false;
@@ -90,6 +86,43 @@ namespace GXPEngine
             {
                 restart_button_normal.visible = true;
                 restart_button_hover.visible = false;
+            }
+
+            if (_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                back_main_button_normal.visible = false;
+                back_main_button_hover.visible = true;
+            }
+            else
+            {
+                back_main_button_normal.visible = true;
+                back_main_button_hover.visible = false;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                                                                        HandleHoverSound()
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        void HandleHoverSound()
+        {
+            if (_restart_button.HitTestPoint(Input.mouseX, Input.mouseY) && restarthoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                restarthoversoundHasPlayed = true;
+            }
+            else if (!_restart_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                restarthoversoundHasPlayed = false;
+            }
+
+            if (_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY) && mainmenuhoversoundHasPlayed == false)
+            {
+                _hover.Play();
+                mainmenuhoversoundHasPlayed = true;
+            }
+            else if (!_main_menu_button.HitTestPoint(Input.mouseX, Input.mouseY))
+            {
+                mainmenuhoversoundHasPlayed = false;
             }
         }
 
@@ -103,7 +136,6 @@ namespace GXPEngine
             MyGame mygame = game as MyGame;
             mygame.ResetWholeGame();
             mygame.CreateMenu();
-
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,6 +169,7 @@ namespace GXPEngine
         {
             HandleClickButton();
             HandleHoverButton();
+            HandleHoverSound();
         }
     }
 }
