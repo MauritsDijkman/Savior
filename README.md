@@ -1,2 +1,2 @@
-Savior
-This repository contains all the code of the project Stitched Together.
+# Savior
+This repository contains all the content of project Savior.
